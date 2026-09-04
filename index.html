@@ -1,141 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardiajuda - Landing Page</title>
-    <link rel="shortcut icon" href="src/imagens/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="src/styles/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CardiAjuda | Cuidado que acompanha você</title>
+  <link rel="shortcut icon" href="src/imagens/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="src/styles/styles.css">
 </head>
 <body>
-  <header>
-      <nav class="nav">
-      <a class="marca" href="#">
-        <img class="logo" src="src/imagens/logo.png" alt="Cardiajuda logo">
-        <span>Cardi</span>Ajuda
-      </a>
-      <div class="links-nav">
-        <a href="#funcionalidades">Funcionalidades</a>
-        <a href="#precos">Preços</a>
-        <a href="#depoimentos">Depoimentos</a>
-      </div>
-      <div class="acoes-nav">
-        <button class="btn-outline">Entrar</button>
-        <button class="btn-primary">Começar grátis</button>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <section class="destaque">
-      <div class="conteudo">
-        <span class="etiqueta">Transforme sua rotina</span>
-        <h1>Organize seu dia com confiança usando uma plataforma leve e moderna.</h1>
-        <p>Crie, acompanhe e otimize suas atividades em um só lugar, com visual limpo e um fluxo que inspira produtividade.</p>
-        <div class="botoes">
-          <button class="btn-primary">Começar grátis</button>
-          <button class="btn-outline">Saber mais</button>
-        </div>
-      </div>
-      <div class="visual">
-        <div class="destaque-card">
-          <img src="src/imagens/destaque-image.png" alt="Ilustração da plataforma CardiAjuda" class="destaque-card-image">
-          <span class="badge">Em tempo real</span>
-          <h3>Rápido. Simples. Eficiente.</h3>
-          <p>Organize tarefas, equipes e metas em um só lugar.</p>
-          <div class="mini-stats">
-            <span>98% satisfação</span>
-            <span>+12h economizadas</span>
-          </div>
-        </div>
-        <div class="visual-pill"></div>
-        <div class="visual-points"></div>
-      </div>
-    </section>
-
-    <section id="funcionalidades" class="secao funcionalidades">
-      <div class="cabecalho-secao">
-        <p>Funcionalidades</p>
-        <h2>Mais controle com menos esforço</h2>
-      </div>
-      <div class="grelha-funcionalidades">
-        <article class="cartao-funcionalidade">
-          <span class="icone-funcionalidade">⚡</span>
-          <h3>Fluxo ágil</h3>
-          <p>Acompanhe tarefas e prazos com uma interface clara e responsiva.</p>
-        </article>
-        <article class="cartao-funcionalidade">
-          <span class="icone-funcionalidade">💬</span>
-          <h3>Comunicação integrada</h3>
-          <p>Comunique-se com sua equipe sem perder o foco no que importa.</p>
-        </article>
-        <article class="cartao-funcionalidade">
-          <span class="icone-funcionalidade">📊</span>
-          <h3>Relatórios visuais</h3>
-          <p>Veja progresso real em gráficos simples e decisões mais rápidas.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="precos" class="secao precos">
-      <div class="cabecalho-secao">
-        <p>Preços</p>
-        <h2>Escolha o plano ideal para começar</h2>
-      </div>
-      <div class="grelha-precos">
-        <article class="cartao-preco">
-          <h3>Starter</h3>
-          <p class="valor">Grátis</p>
-          <ul>
-            <li>Até 3 projetos</li>
-            <li>Colaboração básica</li>
-            <li>Suporte por e-mail</li>
-          </ul>
-          <button class="btn-outline">Iniciar</button>
-        </article>
-        <article class="cartao-preco destaque">
-          <h3>Pro</h3>
-          <p class="valor">R$30/mês</p>
-          <ul>
-            <li>Projetos ilimitados</li>
-            <li>Relatórios avançados</li>
-            <li>Autoatendimento e suporte prioritário</li>
-          </ul>
-          <button class="btn-primary">Assinar</button>
-        </article>
-        <article class="cartao-preco">
-          <h3>Equipe</h3>
-          <p class="valor">R$80/mês</p>
-          <ul>
-            <li>Gerenciamento de times</li>
-            <li>Permissões avançadas</li>
-            <li>Integrações exclusivas</li>
-          </ul>
-          <button class="btn-outline">Fale conosco</button>
-        </article>
-      </div>
-    </section>
-
-    <section id="depoimentos" class="secao depoimentos">
-      <div class="cabecalho-secao">
-        <p>Depoimentos</p>
-        <h2>O que nossos usuários dizem</h2>
-      </div>
-      <div class="grelha-depoimentos">
-        <article class="cartao-depoimento">
-          <p>"A interface é leve e rápida. Agora nossa equipe consegue organizar entregas sem perder tempo."</p>
-          <span>— Mariana, gerente de produto</span>
-        </article>
-        <article class="cartao-depoimento">
-          <p>"Os relatórios nos ajudam a ver o progresso de verdade. Adorei a paleta de cores e a clareza do layout."</p>
-          <span>— Lucas, empreendedor</span>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer class="rodape">
-    <p>© 2026 CardiAjuda. Desenvolvido para quem quer fazer mais com menos!</p>
-  </footer>
+  <div class="app-shell" id="landing-view">
+    <header class="site-header"><nav class="nav">
+      <a class="marca" href="#"><img class="logo" src="src/imagens/logo.png" alt="CardiAjuda logo"><span>Cardi</span>Ajuda</a>
+      <div class="links-nav"><a href="#como-funciona">Como funciona</a><a href="#recursos">Recursos</a><a href="#monitoramento">Monitoramento</a></div>
+      <div class="acoes-nav"><button class="btn-text auth-trigger" data-auth="login">Entrar</button><button class="btn-primary auth-trigger" data-auth="signup">Criar conta <span>→</span></button></div>
+    </nav></header>
+    <main>
+      <section class="destaque reveal"><div class="conteudo"><span class="etiqueta"><i></i> Cuidado cardiovascular para a vida real</span><h1>Seu coração merece <em>atenção todos os dias.</em></h1><p>O CardiAjuda transforma dados e hábitos em decisões simples. Acompanhe sua saúde, entenda seu corpo e conte com orientação para viver melhor.</p><div class="botoes"><button class="btn-primary auth-trigger" data-auth="signup">Começar agora <span>→</span></button><a class="btn-play" href="#como-funciona"><span>▶</span> Entenda como funciona</a></div><div class="trust-line"><div class="avatars"><span>MR</span><span>LC</span><span>AS</span></div><strong>+12 mil pessoas</strong> já cuidam melhor do coração</div></div>
+  <div class="visual"><div class="orb orb-one"></div><div class="orb orb-two"></div><div class="health-dashboard"><div class="dashboard-top"><span>Visão geral</span><button aria-label="Mais opções">•••</button></div><div class="greeting"><div><small>Olá, Marina</small><h3>Como está seu coração?</h3></div><span class="status-dot">♥</span></div><div class="heart-score"><div class="score-ring"><strong>82</strong><small>bom</small></div><div><span class="badge">+ 6% este mês</span><p>Seu índice de saúde<br>está evoluindo bem.</p></div></div><div class="chart"><div class="chart-label"><span>Frequência cardíaca</span><strong>72 <small>bpm</small></strong></div><svg viewBox="0 0 360 100" preserveAspectRatio="none" aria-label="Gráfico de frequência cardíaca"><path d="M0 70 C 28 62, 38 78, 60 52 S 91 65, 115 42 S 149 59, 168 35 S 201 46, 223 32 S 250 54, 277 30 S 311 43, 360 16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M0 70 C 28 62, 38 78, 60 52 S 91 65, 115 42 S 149 59, 168 35 S 201 46, 223 32 S 250 54, 277 30 S 311 43, 360 16 V100 H0Z" fill="url(#chartFill)" opacity=".18"/><defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#a77bff"/><stop offset="1" stop-color="#a77bff" stop-opacity="0"/></linearGradient></defs></svg><div class="chart-days"><span>seg</span><span>ter</span><span>qua</span><span>qui</span><span>sex</span><span>sáb</span><span>dom</span></div></div><div class="quick-cards"><div><span>◷</span><strong>7h 42min</strong><small>Sono</small></div><div><span>⌁</span><strong>6.240</strong><small>Passos</small></div><div><span>◉</span><strong>1.8L</strong><small>Hidratação</small></div></div></div><div class="floating-note"><span>✓</span><div><strong>Consulta lembrada</strong><small>Hoje, às 15:30</small></div></div></div>
+      </section>
+      <section class="impact-strip reveal"><div><strong>83%</strong><span>dos problemas cardíacos<br>podem ser prevenidos</span></div><div><strong>24h</strong><span>de acompanhamento<br>na palma da sua mão</span></div><div><strong>1 lugar</strong><span>para seus dados,<br>hábitos e cuidado</span></div></section>
+      <section id="como-funciona" class="secao problem-solution reveal"><div class="cabecalho-secao"><p>Por que CardiAjuda?</p><h2>Cuidar da saúde não deveria ser complicado.</h2><p class="subheading">Entre consultas, rotina corrida e informações espalhadas, é fácil deixar o cuidado para depois. O CardiAjuda coloca clareza e constância no seu dia.</p></div><div class="solution-grid"><article class="problem-card"><span class="card-tag">O problema</span><h3>Você não precisa esperar um susto para começar.</h3><ul><li><span>×</span> Exames e dados perdidos em vários lugares</li><li><span>×</span> Hábitos difíceis de manter no longo prazo</li><li><span>×</span> Dúvidas que ficam sem resposta</li></ul></article><article class="solution-card"><span class="card-tag">Nossa solução</span><h3>Um cuidado que entende sua rotina.</h3><p>O CardiAjuda reúne tudo em um espaço acolhedor e inteligente, para você acompanhar sua evolução e agir antes que seja urgente.</p><a href="#recursos">Conheça os recursos <span>→</span></a></article></div></section>
+      <section id="recursos" class="secao funcionalidades reveal"><div class="cabecalho-secao split-heading"><div><p>Feito para você</p><h2>Pequenas ações.<br><em>Grandes mudanças.</em></h2></div><p class="subheading">Tecnologia que acompanha o seu ritmo, sem julgamentos e sem complicação.</p></div><div class="grelha-funcionalidades"><article class="cartao-funcionalidade feature-purple"><span class="icone-funcionalidade">♡</span><h3>Meu coração</h3><p>Visualize seus indicadores e entenda a evolução da sua saúde com clareza.</p><a href="#">Ver meu painel <span>↗</span></a></article><article class="cartao-funcionalidade feature-light"><span class="icone-funcionalidade">◷</span><h3>Rotina saudável</h3><p>Receba lembretes gentis para medicamentos, consultas, sono e movimento.</p><a href="#">Montar rotina <span>↗</span></a></article><article class="cartao-funcionalidade feature-dark"><span class="icone-funcionalidade">✦</span><h3>Orientação segura</h3><p>Conteúdos confiáveis e apoio para conversar melhor com seu profissional.</p><a href="#">Explorar conteúdos <span>↗</span></a></article></div></section>
+      <section id="monitoramento" class="secao monitoramento reveal"><div class="cabecalho-secao split-heading"><div><p>Seu histórico em um só lugar</p><h2>Entenda seus sinais antes que eles virem alerta.</h2></div><p class="subheading">Registre suas medições, acompanhe tendências e leve informações mais claras para suas consultas.</p></div><div class="health-metrics"><article class="metric-card glucose-card"><div class="metric-heading"><div><span class="metric-icon">◒</span><h3>Glicemia</h3></div><span class="trend up">↗ 8%</span></div><div class="metric-value"><strong>96</strong><span>mg/dL<br><small>jejum</small></span></div><div class="range-bar"><i></i></div><div class="range-labels"><span>Baixa</span><strong>Normal</strong><span>Alta</span></div><p class="metric-note">Dentro da faixa esperada</p><button class="metric-action">Registrar glicemia <span>+</span></button></article><article class="metric-card pressure-card"><div class="metric-heading"><div><span class="metric-icon">⌁</span><h3>Pressão arterial</h3></div><span class="trend stable">● estável</span></div><div class="pressure-value"><strong>120 <small>/</small> 80</strong><span>mmHg</span></div><div class="pressure-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="chart-caption"><span>Últimos 7 dias</span><strong>Boa evolução</strong></div><p class="metric-note">Sua média está saudável</p><button class="metric-action">Registrar pressão <span>+</span></button></article><div class="measurement-card"><span class="card-tag">Dica do dia</span><h3>Constância vale mais que perfeição.</h3><p>Medir no mesmo horário ajuda você e seu profissional a enxergar padrões com mais segurança.</p><a href="#recursos">Ver guia de medições <span>→</span></a></div></div></section>
+      <section id="depoimentos" class="secao depoimentos reveal"><div class="cabecalho-secao"><p>Histórias reais</p><h2>O cuidado muda quando você não está sozinho.</h2></div><div class="grelha-depoimentos"><article class="cartao-depoimento"><p>“Eu achava que cuidar da saúde era uma lista enorme de coisas. Agora ficou possível, uma escolha por vez.”</p><span>— Mariana, usuária CardiAjuda há 8 meses</span></article><article class="cartao-depoimento"><p>“Chego nas consultas entendendo melhor o que aconteceu na minha rotina. Isso mudou a conversa com meu médico.”</p><span>— Roberto, usuário CardiAjuda</span></article></div></section>
+    </main>
+    <footer class="rodape"><p>© 2026 CardiAjuda. Cuidado que acompanha você.</p><a href="#">Instagram</a><a href="#">Privacidade</a></footer>
+  </div>
+  <section class="auth-view" id="auth-view" aria-hidden="true"><div class="auth-visual"><a class="marca auth-brand" href="#"><img class="logo" src="src/imagens/logo.png" alt="CardiAjuda logo"><span>Cardi</span>Ajuda</a><div class="auth-message"><span class="etiqueta"><i></i> Seu cuidado, do seu jeito</span><h2>Um passo pequeno pode mudar muita coisa.</h2><p>Tenha clareza para cuidar do seu coração todos os dias.</p></div><div class="auth-quote">“Cuidar de mim ficou mais simples quando eu pude enxergar meu progresso.”<small>Camila, usuária CardiAjuda</small></div></div><div class="auth-form-wrap"><button class="close-auth" id="close-auth" aria-label="Voltar para a página inicial">×</button><div class="auth-form"><div class="form-heading"><p class="eyebrow" id="auth-eyebrow">BEM-VINDO DE VOLTA</p><h1 id="auth-title">Entre na sua conta</h1><p id="auth-description">Continue acompanhando o que importa.</p></div><form id="auth-form"><label id="name-field" class="hidden">Nome completo<input type="text" placeholder="Como podemos te chamar?"></label><label>E-mail<input type="email" placeholder="seu@email.com" required></label><label>Senha<div class="password-field"><input type="password" placeholder="••••••••" required><button type="button" class="toggle-password">Mostrar</button></div></label><a class="forgot" href="#">Esqueceu sua senha?</a><button class="btn-primary submit-auth" type="submit"><span id="submit-label">Entrar na CardiAjuda</span> <span>→</span></button><p class="form-feedback" id="form-feedback"></p></form><div class="auth-switch"><span id="switch-question">Ainda não tem uma conta?</span> <button id="switch-auth" type="button">Criar agora</button></div><p class="legal">Ao continuar, você concorda com nossos termos de uso e política de privacidade.</p></div></div></section>
+  <script>
+    const landing = document.getElementById('landing-view'); const authView = document.getElementById('auth-view'); const nameField = document.getElementById('name-field'); const authTitle = document.getElementById('auth-title'); const authEyebrow = document.getElementById('auth-eyebrow'); const authDescription = document.getElementById('auth-description'); const submitLabel = document.getElementById('submit-label'); const switchQuestion = document.getElementById('switch-question'); const switchAuth = document.getElementById('switch-auth'); let isSignup = false;
+    function setAuthMode(signup) { isSignup = signup; nameField.classList.toggle('hidden', !signup); authTitle.textContent = signup ? 'Crie sua conta' : 'Entre na sua conta'; authEyebrow.textContent = signup ? 'COMECE SEU CUIDADO' : 'BEM-VINDO DE VOLTA'; authDescription.textContent = signup ? 'Seu coração agradece o primeiro passo.' : 'Continue acompanhando o que importa.'; submitLabel.textContent = signup ? 'Criar minha conta' : 'Entrar na CardiAjuda'; switchQuestion.textContent = signup ? 'Já tem uma conta?' : 'Ainda não tem uma conta?'; switchAuth.textContent = signup ? 'Entrar' : 'Criar agora'; }
+    function openAuth(mode) { setAuthMode(mode === 'signup'); landing.classList.add('is-hidden'); authView.classList.add('is-visible'); authView.setAttribute('aria-hidden', 'false'); document.body.classList.add('auth-open'); }
+    document.querySelectorAll('.auth-trigger').forEach(button => button.addEventListener('click', () => openAuth(button.dataset.auth))); document.getElementById('close-auth').addEventListener('click', () => { authView.classList.remove('is-visible'); landing.classList.remove('is-hidden'); authView.setAttribute('aria-hidden', 'true'); document.body.classList.remove('auth-open'); }); switchAuth.addEventListener('click', () => setAuthMode(!isSignup));
+    document.querySelector('.toggle-password').addEventListener('click', event => { const input = event.target.closest('.password-field').querySelector('input'); input.type = input.type === 'password' ? 'text' : 'password'; event.target.textContent = input.type === 'password' ? 'Mostrar' : 'Ocultar'; }); document.getElementById('auth-form').addEventListener('submit', event => { event.preventDefault(); document.getElementById('form-feedback').textContent = isSignup ? 'Conta criada com sucesso. Bem-vindo ao seu cuidado.' : 'Login demonstrativo realizado com sucesso.'; });
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }), { threshold: .12 }); document.querySelectorAll('.reveal').forEach(section => observer.observe(section));
+  </script>
 </body>
 </html>
