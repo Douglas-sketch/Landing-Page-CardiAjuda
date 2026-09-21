@@ -1,15 +1,12 @@
-/* =========================================================
-   CARDIAJUDA — APP.JS
-   Landing page + autenticação demo + onboarding personalizado
-   ========================================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
   /* =========================================================
-     ELEMENTOS
+     CARDIAJUDA — APP.JS
+     Cadastro + Login + Onboarding + Área personalizada
      ========================================================= */
 
   const authView = document.querySelector("#auth-view");
-  const authCard = document.querySelector(".auth-card");
+  const onboardingView = document.querySelector("#onboarding-view");
+  const dashboardView = document.querySelector("#dashboard-view");
 
   const loginForm = document.querySelector("#login-form");
   const signupForm = document.querySelector("#signup-form");
@@ -18,9 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupTab = document.querySelector("#signup-tab");
 
   const authClose = document.querySelector("#auth-close");
-
-  const onboardingView = document.querySelector("#onboarding-view");
-  const dashboardView = document.querySelector("#dashboard-view");
 
   const checkinTitle = document.querySelector("#checkin-title");
   const checkinSubtitle = document.querySelector("#checkin-subtitle");
@@ -34,10 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeCheckinButton = document.querySelector("#checkin-close");
 
   const logoutButton = document.querySelector("#logout");
-
-  /* =========================================================
-     ESTADO
-     ========================================================= */
 
   let currentStep = 1;
   const totalSteps = 4;
@@ -62,7 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function saveUser(user) {
-    localStorage.setItem("cardiajudaUser", JSON.stringify(user));
+    localStorage.setItem(
+      "cardiajudaUser",
+      JSON.stringify(user)
+    );
   }
 
   function clearUser() {
@@ -70,28 +63,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================================================
-     AUTENTICAÇÃO — DEMO
+     AUTH
      ========================================================= */
 
   function setAuthMode(mode) {
     if (!loginForm || !signupForm) return;
 
-    const isLogin = mode === "login";
+    const loginMode = mode === "login";
 
-    loginForm.classList.toggle("hidden", !isLogin);
-    signupForm.classList.toggle("hidden", isLogin);
+    loginForm.classList.toggle("hidden", !loginMode);
+    signupForm.classList.toggle("hidden", loginMode);
 
-    loginTab?.classList.toggle("active", isLogin);
-    signupTab?.classList.toggle("active", !isLogin);
+    loginTab?.classList.toggle("active", loginMode);
+    signupTab?.classList.toggle("active", !loginMode);
   }
 
   function openAuth(mode = "login") {
     if (!authView) return;
 
+    setAuthMode(mode);
+
     authView.classList.remove("hidden");
+
     document.body.classList.add("auth-open");
 
-    setAuthMode(mode);
+    /*
+     * Impede que o clique no botão continue seguindo
+     * para alguma âncora da página.
+     */
+    window.scrollTo({
+      top: window.scrollY,
+      behavior: "auto"
+    });
 
     requestAnimationFrame(() => {
       authView.classList.add("show");
@@ -102,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!authView) return;
 
     authView.classList.remove("show");
+
     document.body.classList.remove("auth-open");
 
     setTimeout(() => {
@@ -109,15 +113,75 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 250);
   }
 
-  loginTab?.addEventListener("click", () => {
+  /* =========================================================
+     BOTÕES DE LOGIN / CADASTRO
+     ========================================================= */
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(
+      "[data-auth], #login-btn, #signup-btn, #create-account, #start-now"
+    );
+
+    if (!button) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    /*
+     * Descobre qual tela deve abrir.
+     */
+    const action =
+      button.dataset.auth ||
+      button.dataset.action ||
+      "";
+
+    const text = button.textContent
+      .trim()
+      .toLowerCase();
+
+    if (
+      action === "signup" ||
+      action === "register" ||
+      action === "cadastro" ||
+      text.includes("criar conta") ||
+      text.includes("começar agora") ||
+      text.includes("comece agora")
+    ) {
+      openAuth("signup");
+      return;
+    }
+
+    openAuth("login");
+  });
+
+  /* =========================================================
+     ABAS
+     ========================================================= */
+
+  loginTab?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     setAuthMode("login");
   });
 
-  signupTab?.addEventListener("click", () => {
+  signupTab?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     setAuthMode("signup");
   });
 
-  authClose?.addEventListener("click", closeAuth);
+  /* =========================================================
+     FECHAR AUTH
+     ========================================================= */
+
+  authClose?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    closeAuth();
+  });
 
   authView?.addEventListener("click", (event) => {
     if (event.target === authView) {
@@ -132,16 +196,43 @@ document.addEventListener("DOMContentLoaded", () => {
   signupForm?.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const nameInput = document.querySelector("#signup-name");
-    const emailInput = document.querySelector("#signup-email");
-    const passwordInput = document.querySelector("#signup-password");
+    const nameInput =
+      document.querySelector("#signup-name") ||
+      signupForm.querySelector(
+        'input[name="name"], input[type="text"]'
+      );
+
+    const emailInput =
+      document.querySelector("#signup-email") ||
+      signupForm.querySelector(
+        'input[name="email"], input[type="email"]'
+      );
+
+    const passwordInput =
+      document.querySelector("#signup-password") ||
+      signupForm.querySelector(
+        'input[name="password"], input[type="password"]'
+      );
 
     const name = nameInput?.value.trim() || "";
     const email = emailInput?.value.trim().toLowerCase() || "";
     const password = passwordInput?.value || "";
 
-    if (!name || !email || !password) {
-      alert("Preencha todos os campos.");
+    if (!name) {
+      alert("Digite seu nome.");
+      nameInput?.focus();
+      return;
+    }
+
+    if (!email) {
+      alert("Digite seu e-mail.");
+      emailInput?.focus();
+      return;
+    }
+
+    if (!password) {
+      alert("Digite uma senha.");
+      passwordInput?.focus();
       return;
     }
 
@@ -153,9 +244,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const user = {
-      name,
-      email,
-      password,
+      name: name,
+      email: email,
+      password: password,
       onboardingCompleted: false,
       onboarding: null
     };
@@ -176,21 +267,35 @@ document.addEventListener("DOMContentLoaded", () => {
   loginForm?.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const emailInput = document.querySelector("#login-email");
-    const passwordInput = document.querySelector("#login-password");
+    const emailInput =
+      document.querySelector("#login-email") ||
+      loginForm.querySelector('input[type="email"]');
 
-    const email = emailInput?.value.trim().toLowerCase() || "";
-    const password = passwordInput?.value || "";
+    const passwordInput =
+      document.querySelector("#login-password") ||
+      loginForm.querySelector('input[type="password"]');
+
+    const email =
+      emailInput?.value.trim().toLowerCase() || "";
+
+    const password =
+      passwordInput?.value || "";
 
     const user = getStoredUser();
 
     if (!user) {
-      alert("Nenhuma conta demo encontrada. Crie uma conta primeiro.");
+      alert(
+        "Nenhuma conta foi encontrada. Crie sua conta primeiro."
+      );
+
       setAuthMode("signup");
       return;
     }
 
-    if (user.email !== email || user.password !== password) {
+    if (
+      user.email !== email ||
+      user.password !== password
+    ) {
       alert("E-mail ou senha incorretos.");
       return;
     }
@@ -227,34 +332,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.classList.add("onboarding-open");
 
-    const firstName = user?.name?.split(" ")[0] || "você";
+    const firstName =
+      user?.name?.split(" ")[0] || "você";
 
     if (checkinTitle) {
-      checkinTitle.innerHTML = `Olá, ${firstName}! Vamos conhecer um pouco mais sobre você.`;
+      checkinTitle.textContent =
+        `Olá, ${firstName}! Vamos conhecer um pouco mais sobre você.`;
     }
 
     if (checkinSubtitle) {
       checkinSubtitle.textContent =
-        "Estas perguntas fazem parte de uma demonstração personalizada do CardiAjuda.";
+        "Essas perguntas fazem parte de uma demonstração personalizada do CardiAjuda.";
     }
 
-    showStep(currentStep);
+    showStep(1);
   }
 
   function showStep(step) {
     currentStep = step;
 
-    const steps = document.querySelectorAll(".checkin-step");
+    const steps =
+      document.querySelectorAll(".checkin-step");
 
     steps.forEach((item) => {
-      const itemStep = Number(item.dataset.step);
+      const itemStep =
+        Number(item.dataset.step);
 
-      item.classList.toggle("active", itemStep === step);
+      item.classList.toggle(
+        "active",
+        itemStep === step
+      );
     });
 
     if (progressFill) {
-      const percentage = (step / totalSteps) * 100;
-      progressFill.style.width = `${percentage}%`;
+      progressFill.style.width =
+        `${(step / totalSteps) * 100}%`;
     }
 
     if (progressText) {
@@ -263,76 +375,81 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (backButton) {
-      backButton.classList.toggle("hidden", step === 1);
+      backButton.classList.toggle(
+        "hidden",
+        step === 1
+      );
     }
 
     if (nextButton) {
       nextButton.textContent =
-        step === totalSteps ? "Finalizar" : "Continuar";
+        step === totalSteps
+          ? "Finalizar"
+          : "Continuar";
     }
 
     restoreSelections();
   }
 
+  /* =========================================================
+     RESTAURAR SELEÇÕES
+     ========================================================= */
+
   function restoreSelections() {
-    const activeStep = document.querySelector(
-      `.checkin-step[data-step="${currentStep}"]`
-    );
+    const step =
+      document.querySelector(
+        `.checkin-step[data-step="${currentStep}"]`
+      );
 
-    if (!activeStep) return;
+    if (!step) return;
 
-    const options = activeStep.querySelectorAll(
-      ".checkin-option, input[type='checkbox']"
-    );
+    const options =
+      step.querySelectorAll(".checkin-option");
 
     options.forEach((option) => {
-      const value =
-        option.value ||
-        option.dataset.value ||
-        option.closest(".checkin-option")?.dataset.value;
+      const value = option.dataset.value;
 
       let selected = false;
 
       if (currentStep === 1) {
-        selected = value === onboardingData.diagnosis;
+        selected =
+          value === onboardingData.diagnosis;
       }
 
       if (currentStep === 2) {
-        selected = value === onboardingData.monitoring;
+        selected =
+          value === onboardingData.monitoring;
       }
 
       if (currentStep === 3) {
-        selected = onboardingData.tracking.includes(value);
+        selected =
+          onboardingData.tracking.includes(value);
       }
 
       if (currentStep === 4) {
-        selected = value === onboardingData.support;
+        selected =
+          value === onboardingData.support;
       }
 
-      option.classList?.toggle("selected", selected);
-
-      if (option.matches?.("input[type='checkbox']")) {
-        option.checked = selected;
-      }
-
-      const parent = option.closest(".checkin-option");
-
-      if (parent) {
-        parent.classList.toggle("selected", selected);
-      }
+      option.classList.toggle(
+        "selected",
+        selected
+      );
     });
   }
 
   /* =========================================================
-     ESCOLHAS DO CHECK-IN
+     SELECIONAR OPÇÃO
      ========================================================= */
 
   document.addEventListener("click", (event) => {
-    const option = event.target.closest(".checkin-option");
+    const option =
+      event.target.closest(".checkin-option");
 
     if (!option) return;
 
-    const value = option.dataset.value;
+    const value =
+      option.dataset.value;
 
     if (!value) return;
 
@@ -343,13 +460,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentStep === 1) {
       onboardingData.diagnosis = value;
 
-      const options = document.querySelectorAll(
-        `.checkin-step[data-step="1"] .checkin-option`
-      );
-
-      options.forEach((option) => {
-        option.classList.remove("selected");
-      });
+      document
+        .querySelectorAll(
+          '.checkin-step[data-step="1"] .checkin-option'
+        )
+        .forEach((option) => {
+          option.classList.remove("selected");
+        });
 
       element.classList.add("selected");
     }
@@ -357,21 +474,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentStep === 2) {
       onboardingData.monitoring = value;
 
-      const options = document.querySelectorAll(
-        `.checkin-step[data-step="2"] .checkin-option`
-      );
-
-      options.forEach((option) => {
-        option.classList.remove("selected");
-      });
+      document
+        .querySelectorAll(
+          '.checkin-step[data-step="2"] .checkin-option'
+        )
+        .forEach((option) => {
+          option.classList.remove("selected");
+        });
 
       element.classList.add("selected");
     }
 
     if (currentStep === 3) {
-      if (onboardingData.tracking.includes(value)) {
+      if (
+        onboardingData.tracking.includes(value)
+      ) {
         onboardingData.tracking =
-          onboardingData.tracking.filter((item) => item !== value);
+          onboardingData.tracking.filter(
+            (item) => item !== value
+          );
 
         element.classList.remove("selected");
       } else {
@@ -383,55 +504,72 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentStep === 4) {
       onboardingData.support = value;
 
-      const options = document.querySelectorAll(
-        `.checkin-step[data-step="4"] .checkin-option`
-      );
-
-      options.forEach((option) => {
-        option.classList.remove("selected");
-      });
+      document
+        .querySelectorAll(
+          '.checkin-step[data-step="4"] .checkin-option'
+        )
+        .forEach((option) => {
+          option.classList.remove("selected");
+        });
 
       element.classList.add("selected");
     }
   }
 
   /* =========================================================
-     BOTÕES DO ONBOARDING
+     NAVEGAÇÃO DO ONBOARDING
      ========================================================= */
 
-  nextButton?.addEventListener("click", () => {
+  nextButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+
     if (currentStep < totalSteps) {
       showStep(currentStep + 1);
     } else {
-      finishCheckin();
+      finishCheckin(false);
     }
   });
 
-  backButton?.addEventListener("click", () => {
+  backButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+
     if (currentStep > 1) {
       showStep(currentStep - 1);
     }
   });
 
-  skipButton?.addEventListener("click", () => {
+  skipButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+
     finishCheckin(true);
   });
 
-  closeCheckinButton?.addEventListener("click", () => {
-    closeOnboarding();
-  });
+  closeCheckinButton?.addEventListener(
+    "click",
+    (event) => {
+      event.preventDefault();
+      closeOnboarding();
+    }
+  );
+
+  /* =========================================================
+     FECHAR ONBOARDING
+     ========================================================= */
 
   function closeOnboarding() {
     onboardingView?.classList.remove("show");
 
     setTimeout(() => {
       onboardingView?.classList.add("hidden");
-      document.body.classList.remove("onboarding-open");
+
+      document.body.classList.remove(
+        "onboarding-open"
+      );
     }, 250);
   }
 
   /* =========================================================
-     FINALIZAR CHECK-IN
+     FINALIZAR ONBOARDING
      ========================================================= */
 
   function finishCheckin(skipped = false) {
@@ -460,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================================================
-     DASHBOARD PERSONALIZADO
+     DASHBOARD
      ========================================================= */
 
   function showDashboard(user) {
@@ -469,15 +607,19 @@ document.addEventListener("DOMContentLoaded", () => {
     onboardingView?.classList.add("hidden");
 
     dashboardView.classList.remove("hidden");
-    document.body.classList.add("dashboard-open");
 
-    const firstName = user?.name?.split(" ")[0] || "você";
+    document.body.classList.add(
+      "dashboard-open"
+    );
 
-    const nameElements = document.querySelectorAll("[data-user-name]");
+    const firstName =
+      user?.name?.split(" ")[0] || "você";
 
-    nameElements.forEach((element) => {
-      element.textContent = firstName;
-    });
+    document
+      .querySelectorAll("[data-user-name]")
+      .forEach((element) => {
+        element.textContent = firstName;
+      });
 
     buildPersonalSummary(user);
   }
@@ -485,35 +627,48 @@ document.addEventListener("DOMContentLoaded", () => {
   function buildPersonalSummary(user) {
     const data = user?.onboarding || {};
 
-    const focusElement = document.querySelector("#personal-focus");
-    const rhythmElement = document.querySelector("#personal-rhythm");
-    const nextElement = document.querySelector("#personal-next");
+    const focusElement =
+      document.querySelector("#personal-focus");
 
-    /* -------------------------
-       FOCO
-       ------------------------- */
+    const rhythmElement =
+      document.querySelector("#personal-rhythm");
 
-    let focus = "Seu bem-estar e acompanhamento";
+    const nextElement =
+      document.querySelector("#personal-next");
+
+    /* FOCO */
+
+    let focus =
+      "Seu bem-estar e acompanhamento";
 
     switch (data.diagnosis) {
       case "diabetes":
-        focus = "Acompanhamento relacionado à glicose";
+        focus =
+          "Acompanhamento relacionado à glicose";
         break;
 
       case "hypertension":
-        focus = "Acompanhamento da pressão arterial";
+      case "hipertensao":
+        focus =
+          "Acompanhamento da pressão arterial";
         break;
 
       case "both":
-        focus = "Acompanhamento de pressão e glicose";
+      case "ambos":
+        focus =
+          "Acompanhamento de pressão e glicose";
         break;
 
       case "none":
-        focus = "Prevenção e hábitos saudáveis";
+      case "nenhum":
+        focus =
+          "Prevenção e hábitos saudáveis";
         break;
 
       case "prefer-not":
-        focus = "Um acompanhamento no seu ritmo";
+      case "prefiro-nao-dizer":
+        focus =
+          "Um acompanhamento no seu ritmo";
         break;
     }
 
@@ -521,27 +676,34 @@ document.addEventListener("DOMContentLoaded", () => {
       focusElement.textContent = focus;
     }
 
-    /* -------------------------
-       ROTINA
-       ------------------------- */
+    /* ROTINA */
 
-    let rhythm = "Vamos construir uma rotina de acompanhamento.";
+    let rhythm =
+      "Vamos construir uma rotina de acompanhamento.";
 
     switch (data.monitoring) {
       case "regular":
-        rhythm = "Você já mantém uma rotina regular de acompanhamento.";
+      case "regularmente":
+        rhythm =
+          "Você já mantém uma rotina regular de acompanhamento.";
         break;
 
       case "sometimes":
-        rhythm = "Seu acompanhamento acontece de forma ocasional.";
+      case "as-vezes":
+        rhythm =
+          "Seu acompanhamento acontece de forma ocasional.";
         break;
 
       case "rarely":
-        rhythm = "Podemos ajudar você a organizar melhor sua rotina.";
+      case "quase-nunca":
+        rhythm =
+          "Podemos ajudar você a organizar melhor sua rotina.";
         break;
 
       case "starting":
-        rhythm = "Você está começando uma nova rotina de acompanhamento.";
+      case "comecando":
+        rhythm =
+          "Você está começando uma nova rotina de acompanhamento.";
         break;
     }
 
@@ -549,66 +711,93 @@ document.addEventListener("DOMContentLoaded", () => {
       rhythmElement.textContent = rhythm;
     }
 
-    /* -------------------------
-       PRÓXIMO PASSO
-       ------------------------- */
+    /* PRÓXIMO PASSO */
 
-    let next = "Explore os recursos disponíveis no CardiAjuda.";
+    let next =
+      "Explore os recursos disponíveis no CardiAjuda.";
 
-    if (data.support === "reminders") {
-      next = "Organize lembretes para ajudar na sua rotina.";
-    }
+    switch (data.support) {
+      case "reminders":
+      case "lembretes":
+        next =
+          "Organize lembretes para ajudar na sua rotina.";
+        break;
 
-    if (data.support === "alerts") {
-      next = "Acompanhe seus registros e fique atento aos alertas do sistema.";
-    }
+      case "alerts":
+      case "alertas":
+        next =
+          "Acompanhe seus registros e fique atento aos alertas do sistema.";
+        break;
 
-    if (data.support === "guidance") {
-      next = "Explore conteúdos e informações para acompanhar sua rotina.";
-    }
+      case "guidance":
+      case "orientacoes":
+        next =
+          "Explore conteúdos e informações para acompanhar sua rotina.";
+        break;
 
-    if (data.support === "history") {
-      next = "Consulte seu histórico para visualizar seus registros.";
+      case "history":
+      case "historico":
+        next =
+          "Consulte seu histórico para visualizar seus registros.";
+        break;
     }
 
     if (nextElement) {
       nextElement.textContent = next;
     }
 
-    /* -------------------------
-       ITENS SELECIONADOS
-       ------------------------- */
+    /* ITENS ACOMPANHADOS */
 
     const trackingContainer =
-      document.querySelector("#personal-tracking");
+      document.querySelector(
+        "#personal-tracking"
+      );
 
-    if (trackingContainer) {
-      trackingContainer.innerHTML = "";
+    if (!trackingContainer) return;
 
-      const labels = {
-        pressure: "Pressão",
-        glucose: "Glicose",
-        medications: "Medicamentos",
-        habits: "Hábitos e rotina"
-      };
+    trackingContainer.innerHTML = "";
 
-      if (data.tracking?.length) {
-        data.tracking.forEach((item) => {
-          const badge = document.createElement("span");
+    const labels = {
+      pressure: "Pressão",
+      pressao: "Pressão",
 
-          badge.className = "tracking-badge";
-          badge.textContent = labels[item] || item;
+      glucose: "Glicose",
+      glicemia: "Glicemia",
 
-          trackingContainer.appendChild(badge);
-        });
-      } else {
-        const empty = document.createElement("span");
+      medications: "Medicamentos",
+      medicamentos: "Medicamentos",
 
-        empty.className = "tracking-badge";
-        empty.textContent = "Nenhum item selecionado";
+      habits: "Hábitos e rotina",
+      rotina: "Hábitos e rotina"
+    };
 
-        trackingContainer.appendChild(empty);
-      }
+    if (
+      data.tracking &&
+      data.tracking.length
+    ) {
+      data.tracking.forEach((item) => {
+        const badge =
+          document.createElement("span");
+
+        badge.className =
+          "tracking-badge";
+
+        badge.textContent =
+          labels[item] || item;
+
+        trackingContainer.appendChild(badge);
+      });
+    } else {
+      const badge =
+        document.createElement("span");
+
+      badge.className =
+        "tracking-badge";
+
+      badge.textContent =
+        "Nenhum item selecionado";
+
+      trackingContainer.appendChild(badge);
     }
   }
 
@@ -616,11 +805,49 @@ document.addEventListener("DOMContentLoaded", () => {
      LOGOUT
      ========================================================= */
 
-  logoutButton?.addEventListener("click", () => {
-    clearUser();
+  logoutButton?.addEventListener(
+    "click",
+    (event) => {
+      event.preventDefault();
 
-    dashboardView?.classList.add("hidden");
-    document.body.classList.remove("dashboard-open");
+      clearUser();
+
+      dashboardView?.classList.add(
+        "hidden"
+      );
+
+      document.body.classList.remove(
+        "dashboard-open"
+      );
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  );
+
+  /* =========================================================
+     VOLTAR PARA O SITE
+     ========================================================= */
+
+  document.addEventListener("click", (event) => {
+    const button =
+      event.target.closest(
+        "[data-open-site], #back-to-site"
+      );
+
+    if (!button) return;
+
+    event.preventDefault();
+
+    dashboardView?.classList.add(
+      "hidden"
+    );
+
+    document.body.classList.remove(
+      "dashboard-open"
+    );
 
     window.scrollTo({
       top: 0,
@@ -629,46 +856,126 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================================================
-     BOTÕES QUE ABREM LOGIN/CADASTRO
+     MENU MOBILE
      ========================================================= */
 
-  document.addEventListener("click", (event) => {
-    const loginButton = event.target.closest("[data-auth='login']");
-    const signupButton = event.target.closest("[data-auth='signup']");
+  const menuButton =
+    document.querySelector("#menu-toggle");
 
-    if (loginButton) {
-      event.preventDefault();
-      openAuth("login");
-    }
+  const mobileMenu =
+    document.querySelector("#mobile-menu");
 
-    if (signupButton) {
+  menuButton?.addEventListener(
+    "click",
+    (event) => {
       event.preventDefault();
-      openAuth("signup");
+
+      mobileMenu?.classList.toggle("open");
+      menuButton.classList.toggle("active");
     }
-  });
+  );
+
+  mobileMenu
+    ?.querySelectorAll("a")
+    .forEach((link) => {
+      link.addEventListener(
+        "click",
+        () => {
+          mobileMenu.classList.remove(
+            "open"
+          );
+
+          menuButton?.classList.remove(
+            "active"
+          );
+        }
+      );
+    });
+
+  /* =========================================================
+     SCROLL SUAVE
+     ========================================================= */
+
+  document
+    .querySelectorAll('a[href^="#"]')
+    .forEach((link) => {
+      link.addEventListener(
+        "click",
+        (event) => {
+          const targetId =
+            link.getAttribute("href");
+
+          if (
+            !targetId ||
+            targetId === "#"
+          ) {
+            return;
+          }
+
+          /*
+           * Não intercepta links usados
+           * pelo sistema de autenticação.
+           */
+          if (
+            link.dataset.auth ||
+            link.id === "login-btn" ||
+            link.id === "signup-btn" ||
+            link.id === "create-account"
+          ) {
+            return;
+          }
+
+          const target =
+            document.querySelector(
+              targetId
+            );
+
+          if (!target) return;
+
+          event.preventDefault();
+
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      );
+    });
 
   /* =========================================================
      GSAP
      ========================================================= */
 
   function initAnimations() {
-    if (typeof gsap === "undefined") return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      typeof gsap === "undefined"
+    ) {
       return;
     }
 
-    if (typeof ScrollTrigger !== "undefined") {
-      gsap.registerPlugin(ScrollTrigger);
+    if (
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+    ) {
+      return;
     }
 
-    /* -------------------------
-       HERO
-       ------------------------- */
+    if (
+      typeof ScrollTrigger !==
+      "undefined"
+    ) {
+      gsap.registerPlugin(
+        ScrollTrigger
+      );
+    }
 
-    const heroElements = document.querySelectorAll(
-      ".hero-content > *, .hero-image"
-    );
+    /* HERO */
+
+    const heroElements =
+      document.querySelectorAll(
+        ".hero-content > *, .hero-image"
+      );
 
     if (heroElements.length) {
       gsap.from(heroElements, {
@@ -680,35 +987,41 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    /* -------------------------
-       SEÇÕES
-       ------------------------- */
+    /* SEÇÕES */
 
-    if (typeof ScrollTrigger !== "undefined") {
-      const animatedSections = document.querySelectorAll(
-        ".section-title, .section-description, .feature-card, .info-card, .about-content"
+    if (
+      typeof ScrollTrigger !==
+      "undefined"
+    ) {
+      const elements =
+        document.querySelectorAll(
+          ".section-title, .section-description, .feature-card, .info-card, .about-content"
+        );
+
+      elements.forEach(
+        (element) => {
+          gsap.from(element, {
+            opacity: 0,
+            y: 35,
+            duration: 0.8,
+            ease: "power2.out",
+
+            scrollTrigger: {
+              trigger: element,
+              start: "top 85%",
+              once: true
+            }
+          });
+        }
       );
-
-      animatedSections.forEach((element) => {
-        gsap.from(element, {
-          opacity: 0,
-          y: 35,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: element,
-            start: "top 85%",
-            once: true
-          }
-        });
-      });
     }
 
-    /* -------------------------
-       LOGO
-       ------------------------- */
+    /* LOGO */
 
-    const logo = document.querySelector(".logo");
+    const logo =
+      document.querySelector(
+        ".logo"
+      );
 
     if (logo) {
       gsap.to(logo, {
@@ -720,11 +1033,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    /* -------------------------
-       IMAGEM PRINCIPAL
-       ------------------------- */
+    /* IMAGEM HERO */
 
-    const heroImage = document.querySelector(".hero-image img");
+    const heroImage =
+      document.querySelector(
+        ".hero-image img"
+      );
 
     if (heroImage) {
       gsap.to(heroImage, {
@@ -738,93 +1052,51 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================================================
-     EFEITO MAGNÉTICO DOS BOTÕES
+     BOTÕES MAGNÉTICOS
      ========================================================= */
 
   function initMagneticButtons() {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+    ) {
       return;
     }
 
-    const buttons = document.querySelectorAll(
-      ".btn, .cta-button, .hero-button"
-    );
+    const buttons =
+      document.querySelectorAll(
+        ".btn, .cta-button, .hero-button"
+      );
 
     buttons.forEach((button) => {
-      button.addEventListener("mousemove", (event) => {
-        const rect = button.getBoundingClientRect();
+      button.addEventListener(
+        "mousemove",
+        (event) => {
+          const rect =
+            button.getBoundingClientRect();
 
-        const x = event.clientX - rect.left - rect.width / 2;
-        const y = event.clientY - rect.top - rect.height / 2;
+          const x =
+            event.clientX -
+            rect.left -
+            rect.width / 2;
 
-        button.style.transform =
-          `translate(${x * 0.08}px, ${y * 0.08}px)`;
-      });
+          const y =
+            event.clientY -
+            rect.top -
+            rect.height / 2;
 
-      button.addEventListener("mouseleave", () => {
-        button.style.transform = "";
-      });
-    });
-  }
+          button.style.transform =
+            `translate(${x * 0.08}px, ${y * 0.08}px)`;
+        }
+      );
 
-  /* =========================================================
-     MENU MOBILE
-     ========================================================= */
-
-  const menuButton = document.querySelector("#menu-toggle");
-  const mobileMenu = document.querySelector("#mobile-menu");
-
-  menuButton?.addEventListener("click", () => {
-    mobileMenu?.classList.toggle("open");
-    menuButton.classList.toggle("active");
-  });
-
-  document.querySelectorAll("#mobile-menu a").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileMenu?.classList.remove("open");
-      menuButton?.classList.remove("active");
-    });
-  });
-
-  /* =========================================================
-     SCROLL SUAVE
-     ========================================================= */
-
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const targetId = link.getAttribute("href");
-
-      if (!targetId || targetId === "#") return;
-
-      const target = document.querySelector(targetId);
-
-      if (!target) return;
-
-      event.preventDefault();
-
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    });
-  });
-
-  /* =========================================================
-     USUÁRIO JÁ LOGADO
-     ========================================================= */
-
-  const storedUser = getStoredUser();
-
-  if (storedUser && storedUser.onboardingCompleted) {
-    // Mantém a landing page como tela inicial.
-    // O usuário pode abrir o dashboard pelo botão correspondente.
-    const dashboardOpenButton = document.querySelector(
-      "[data-open-dashboard]"
-    );
-
-    dashboardOpenButton?.addEventListener("click", (event) => {
-      event.preventDefault();
-      showDashboard(storedUser);
+      button.addEventListener(
+        "mouseleave",
+        () => {
+          button.style.transform = "";
+        }
+      );
     });
   }
 
@@ -835,5 +1107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initAnimations();
   initMagneticButtons();
 
-  console.log("CardiAjuda iniciado com sucesso.");
+  console.log(
+    "CardiAjuda iniciado com sucesso."
+  );
 });
