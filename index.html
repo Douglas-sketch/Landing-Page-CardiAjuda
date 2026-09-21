@@ -379,7 +379,7 @@
         </div>
 
         <form id="auth-form">
-          <label id="name-field" class="hidden">Nome completo<input type="text" placeholder="Como podemos te chamar?"></label>
+          <label id="name-field" class="hidden">Nome completo<input id="signup-name" type="text" placeholder="Como podemos te chamar?"></label>
           <label>E-mail<input type="email" placeholder="seu@email.com" required></label>
           <label>Senha
             <div class="password-field">
@@ -400,119 +400,132 @@
       </div>
     </div>
   </section>
-
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+  <script src="src/scripts/app.js"></script>
 
-    const landing = document.getElementById('landing-view');
-    const authView = document.getElementById('auth-view');
-    const nameField = document.getElementById('name-field');
-    const authTitle = document.getElementById('auth-title');
-    const authEyebrow = document.getElementById('auth-eyebrow');
-    const authDescription = document.getElementById('auth-description');
-    const submitLabel = document.getElementById('submit-label');
-    const switchQuestion = document.getElementById('switch-question');
-    const switchAuth = document.getElementById('switch-auth');
-    let isSignup = false;
+  <!-- ONBOARDING / CHECK-IN -->
+  <section class="onboarding-view" id="onboarding-view" aria-hidden="true">
+    <div class="onboarding-shell">
+      <div class="onboarding-progress">
+        <div class="onboarding-progress-top">
+          <span id="checkin-step-label">01 / 04</span>
+          <button type="button" id="close-onboarding">×</button>
+        </div>
+        <div class="progress-track"><i id="checkin-progress"></i></div>
+      </div>
 
-    // Entrada inicial
-    gsap.from('.hero-copy > *', { opacity: 0, y: 24, duration: .8, stagger: .09, ease: 'power3.out', delay: .15 });
-    gsap.from('.main-dashboard', { opacity: 0, y: 40, rotate: 1.5, duration: 1.05, ease: 'power3.out', delay: .35 });
-    gsap.from('.floating-card', { opacity: 0, scale: .8, duration: .7, stagger: .15, ease: 'back.out(1.7)', delay: .8 });
+      <div class="onboarding-brand">
+        <img src="src/imagens/logo.png" alt="Logo CardiAjuda">
+        <span>Cardi<strong>Ajuda</strong></span>
+      </div>
 
-    // Animações de scroll
-    document.querySelectorAll('.reveal').forEach((el) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 34 },
-        {
-          opacity: 1, y: 0, duration: .8, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 84%', once: true }
-        }
-      );
-    });
+      <div class="checkin-content">
+        <div class="checkin-copy">
+          <span class="kicker">Seu primeiro check-in</span>
+          <h1 id="checkin-title">Olá, <span id="checkin-name">você</span> 👋</h1>
+          <p id="checkin-subtitle">Vamos entender um pouco da sua rotina para personalizar sua experiência.</p>
+        </div>
 
-    // Linha do gráfico
-    gsap.fromTo('.chart-line',
-      { strokeDasharray: 1, strokeDashoffset: 1 },
-      { strokeDashoffset: 0, duration: 1.7, ease: 'power2.out', delay: .7 }
-    );
+        <form id="checkin-form" class="checkin-form">
+          <div class="checkin-step active" data-step="1">
+            <span class="question-index">01</span>
+            <h2>Você já recebeu algum diagnóstico?</h2>
+            <p>Selecione a opção que mais representa sua situação hoje.</p>
+            <div class="choice-grid">
+              <button type="button" class="choice" data-value="nenhum">Não recebi diagnóstico</button>
+              <button type="button" class="choice" data-value="diabetes">Diabetes</button>
+              <button type="button" class="choice" data-value="hipertensao">Hipertensão</button>
+              <button type="button" class="choice" data-value="ambos">Diabetes e hipertensão</button>
+              <button type="button" class="choice" data-value="prefiro-nao-dizer">Prefiro não responder</button>
+            </div>
+          </div>
 
-    // Movimento sutil do dashboard
-    gsap.to('.main-dashboard', {
-      y: -8, duration: 3.2, repeat: -1, yoyo: true, ease: 'sine.inOut'
-    });
+          <div class="checkin-step" data-step="2">
+            <span class="question-index">02</span>
+            <h2>Como está seu acompanhamento hoje?</h2>
+            <p>Isso ajuda o CardiAjuda a entender como apoiar sua rotina.</p>
+            <div class="choice-grid">
+              <button type="button" class="choice" data-value="regular">Acompanho regularmente</button>
+              <button type="button" class="choice" data-value="as-vezes">Acompanho às vezes</button>
+              <button type="button" class="choice" data-value="quase-nunca">Quase não acompanho</button>
+              <button type="button" class="choice" data-value="comecando">Estou começando agora</button>
+            </div>
+          </div>
 
-    gsap.to('.ambient-a', { x: 35, y: 25, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.ambient-b', { x: -25, y: -20, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+          <div class="checkin-step" data-step="3">
+            <span class="question-index">03</span>
+            <h2>O que você mais quer acompanhar?</h2>
+            <p>Escolha uma ou mais opções.</p>
+            <div class="choice-grid multi">
+              <button type="button" class="choice" data-value="pressao">Pressão arterial</button>
+              <button type="button" class="choice" data-value="glicemia">Glicemia</button>
+              <button type="button" class="choice" data-value="medicamentos">Medicamentos</button>
+              <button type="button" class="choice" data-value="habitos">Hábitos e rotina</button>
+            </div>
+            <button type="button" class="checkin-next" id="step3-next">Continuar →</button>
+          </div>
 
-    // Botões com microinteração
-    document.querySelectorAll('.magnetic').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width / 2) * .12;
-        const y = (e.clientY - r.top - r.height / 2) * .12;
-        gsap.to(btn, { x, y, duration: .25, ease: 'power2.out' });
-      });
-      btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: .35, ease: 'elastic.out(1, .5)' }));
-    });
+          <div class="checkin-step" data-step="4">
+            <span class="question-index">04</span>
+            <h2>O que seria mais útil para você?</h2>
+            <p>Escolha a principal ajuda que você gostaria de encontrar na plataforma.</p>
+            <div class="choice-grid">
+              <button type="button" class="choice" data-value="lembretes">Lembretes</button>
+              <button type="button" class="choice" data-value="alertas">Alertas e acompanhamento</button>
+              <button type="button" class="choice" data-value="orientacoes">Orientações e conteúdos</button>
+              <button type="button" class="choice" data-value="historico">Histórico das minhas medições</button>
+            </div>
+          </div>
+        </form>
 
-    function setAuthMode(signup) {
-      isSignup = signup;
-      nameField.classList.toggle('hidden', !signup);
-      authTitle.textContent = signup ? 'Crie sua conta' : 'Entre na sua conta';
-      authEyebrow.textContent = signup ? 'COMECE SEU CUIDADO' : 'BEM-VINDO DE VOLTA';
-      authDescription.textContent = signup ? 'Seu primeiro passo para um acompanhamento mais conectado.' : 'Continue acompanhando o que importa.';
-      submitLabel.textContent = signup ? 'Criar minha conta' : 'Entrar na CardiAjuda';
-      switchQuestion.textContent = signup ? 'Já tem uma conta?' : 'Ainda não tem uma conta?';
-      switchAuth.textContent = signup ? 'Entrar' : 'Criar agora';
-    }
+        <div class="checkin-footer">
+          <button type="button" id="checkin-back" class="checkin-back hidden">← Voltar</button>
+          <span>Suas respostas ficam apenas neste navegador nesta demonstração.</span>
+          <button type="button" id="checkin-skip">Pular</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function openAuth(mode) {
-      setAuthMode(mode === 'signup');
-      landing.classList.add('is-hidden');
-      authView.classList.add('is-visible');
-      authView.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('auth-open');
-      gsap.from('.auth-panel > *, .auth-form > *', { opacity: 0, y: 18, duration: .6, stagger: .06, ease: 'power3.out' });
-    }
+  <!-- PERSONALIZED DASHBOARD -->
+  <section class="personal-view" id="personal-view" aria-hidden="true">
+    <div class="personal-topbar">
+      <a class="brand" href="#"><img src="src/imagens/logo.png" alt=""><span>Cardi<strong>Ajuda</strong></span></a>
+      <button type="button" id="logout-demo" class="btn btn-ghost">Sair</button>
+    </div>
+    <div class="personal-container">
+      <div class="personal-welcome">
+        <span class="kicker">Seu espaço CardiAjuda</span>
+        <h1 id="personal-greeting">Olá!</h1>
+        <p id="personal-summary">Veja um resumo do seu check-in e continue acompanhando sua rotina.</p>
+      </div>
 
-    document.querySelectorAll('.auth-trigger').forEach(button => {
-      button.addEventListener('click', () => openAuth(button.dataset.auth));
-    });
+      <div class="personal-grid">
+        <article class="personal-card highlight">
+          <span class="personal-label">Seu foco</span>
+          <strong id="personal-focus">Acompanhamento</strong>
+          <p id="personal-focus-text">Vamos construir seu acompanhamento aos poucos.</p>
+        </article>
+        <article class="personal-card">
+          <span class="personal-label">Seu ritmo</span>
+          <strong id="personal-rhythm">Começando</strong>
+          <p>Use os registros para perceber sua evolução ao longo do tempo.</p>
+        </article>
+        <article class="personal-card">
+          <span class="personal-label">Próximo passo</span>
+          <strong id="personal-next">Registrar uma medição</strong>
+          <p>O CardiAjuda pode reunir suas informações em um só lugar.</p>
+        </article>
+      </div>
 
-    document.getElementById('close-auth').addEventListener('click', () => {
-      authView.classList.remove('is-visible');
-      landing.classList.remove('is-hidden');
-      authView.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('auth-open');
-    });
+      <div class="personal-note">
+        <span>✦</span>
+        <div><strong>Importante</strong><p>Este check-in é apenas uma demonstração de experiência. Ele não diagnostica condições de saúde nem substitui avaliação de um profissional.</p></div>
+      </div>
+      <button type="button" class="btn btn-primary btn-large" id="back-to-site">Voltar para o site</button>
+    </div>
+  </section>
 
-    switchAuth.addEventListener('click', () => setAuthMode(!isSignup));
-
-    document.querySelector('.toggle-password').addEventListener('click', event => {
-      const input = event.target.closest('.password-field').querySelector('input');
-      input.type = input.type === 'password' ? 'text' : 'password';
-      event.target.textContent = input.type === 'password' ? 'Mostrar' : 'Ocultar';
-    });
-
-    document.getElementById('auth-form').addEventListener('submit', event => {
-      event.preventDefault();
-      document.getElementById('form-feedback').textContent = isSignup
-        ? 'Conta criada com sucesso. Bem-vindo ao CardiAjuda.'
-        : 'Login demonstrativo realizado com sucesso.';
-    });
-
-    // Respeita usuários que preferem menos movimento
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      gsap.globalTimeline.pause();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      document.querySelectorAll('.reveal').forEach(el => {
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-      });
-    }
-  </script>
 </body>
 </html>
