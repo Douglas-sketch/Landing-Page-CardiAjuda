@@ -3,37 +3,516 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CardiAjuda | Cuidado que acompanha você</title>
-  <link rel="shortcut icon" href="src/imagens/logo.png" type="image/x-icon">
-  <link rel="stylesheet" href="src/styles/styles.css">
+  <meta name="description" content="CardiAjuda — plataforma integrada de monitoramento para hipertensão, diabetes e risco cardiovascular.">
+  <title>CardiAjuda — Diabetes e hipertensão sob controle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/style.css">
 </head>
+
 <body>
-  <div class="app-shell" id="landing-view">
-    <header class="site-header"><nav class="nav">
-      <a class="marca" href="#"><img class="logo" src="src/imagens/logo.png" alt="CardiAjuda logo"><span>Cardi</span>Ajuda</a>
-      <div class="links-nav"><a href="#como-funciona">Como funciona</a><a href="#recursos">Recursos</a><a href="#monitoramento">Monitoramento</a></div>
-      <div class="acoes-nav"><button class="btn-text auth-trigger" data-auth="login">Entrar</button><button class="btn-primary auth-trigger" data-auth="signup">Criar conta <span>→</span></button></div>
-    </nav></header>
+  <div class="site" id="landing-view">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+
+    <header class="header">
+      <nav class="nav container">
+        <a class="brand" href="#" aria-label="CardiAjuda">
+          <img src="src/imagens/logo.png" alt="Logo CardiAjuda">
+          <span>Cardi<strong>Ajuda</strong></span>
+        </a>
+
+        <div class="nav-links">
+          <a href="#problema">O problema</a>
+          <a href="#solucao">A solução</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#monitoramento">Monitoramento</a>
+        </div>
+
+        <div class="nav-actions">
+          <button class="btn btn-ghost auth-trigger" data-auth="login">Entrar</button>
+          <button class="btn btn-primary magnetic auth-trigger" data-auth="signup">
+            Criar conta <span>↗</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
     <main>
-      <section class="destaque reveal"><div class="conteudo"><span class="etiqueta"><i></i> Cuidado cardiovascular para a vida real</span><h1>Seu coração merece <em>atenção todos os dias.</em></h1><p>O CardiAjuda transforma dados e hábitos em decisões simples. Acompanhe sua saúde, entenda seu corpo e conte com orientação para viver melhor.</p><div class="botoes"><button class="btn-primary auth-trigger" data-auth="signup">Começar agora <span>→</span></button><a class="btn-play" href="#como-funciona"><span>▶</span> Entenda como funciona</a></div><div class="trust-line"><div class="avatars"><span>MR</span><span>LC</span><span>AS</span></div><strong>+12 mil pessoas</strong> já cuidam melhor do coração</div></div>
-  <div class="visual"><div class="orb orb-one"></div><div class="orb orb-two"></div><div class="health-dashboard"><div class="dashboard-top"><span>Visão geral</span><button aria-label="Mais opções">•••</button></div><div class="greeting"><div><small>Olá, Marina</small><h3>Como está seu coração?</h3></div><span class="status-dot">♥</span></div><div class="heart-score"><div class="score-ring"><strong>82</strong><small>bom</small></div><div><span class="badge">+ 6% este mês</span><p>Seu índice de saúde<br>está evoluindo bem.</p></div></div><div class="chart"><div class="chart-label"><span>Frequência cardíaca</span><strong>72 <small>bpm</small></strong></div><svg viewBox="0 0 360 100" preserveAspectRatio="none" aria-label="Gráfico de frequência cardíaca"><path d="M0 70 C 28 62, 38 78, 60 52 S 91 65, 115 42 S 149 59, 168 35 S 201 46, 223 32 S 250 54, 277 30 S 311 43, 360 16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M0 70 C 28 62, 38 78, 60 52 S 91 65, 115 42 S 149 59, 168 35 S 201 46, 223 32 S 250 54, 277 30 S 311 43, 360 16 V100 H0Z" fill="url(#chartFill)" opacity=".18"/><defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#a77bff"/><stop offset="1" stop-color="#a77bff" stop-opacity="0"/></linearGradient></defs></svg><div class="chart-days"><span>seg</span><span>ter</span><span>qua</span><span>qui</span><span>sex</span><span>sáb</span><span>dom</span></div></div><div class="quick-cards"><div><span>◷</span><strong>7h 42min</strong><small>Sono</small></div><div><span>⌁</span><strong>6.240</strong><small>Passos</small></div><div><span>◉</span><strong>1.8L</strong><small>Hidratação</small></div></div></div><div class="floating-note"><span>✓</span><div><strong>Consulta lembrada</strong><small>Hoje, às 15:30</small></div></div></div>
+      <!-- HERO -->
+      <section class="hero container">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><i></i> Plataforma integrada de monitoramento</div>
+          <h1>Diabetes e hipertensão <em>sob controle.</em></h1>
+          <p>
+            O CardiAjuda conecta pacientes e profissionais de saúde em um único espaço,
+            reunindo acompanhamento, hábitos, alertas e informações para um cuidado mais contínuo.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-large magnetic auth-trigger" data-auth="signup">
+              Começar agora <span>→</span>
+            </button>
+            <a class="text-link" href="#solucao"><span class="play">▶</span> Conheça a solução</a>
+          </div>
+
+          <div class="hero-note">
+            <span class="pulse-dot"></span>
+            <span>Paciente + profissional + informação em um só lugar</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="grid-lines"></div>
+          <div class="visual-glow"></div>
+
+          <div class="dashboard-card main-dashboard">
+            <div class="dash-top">
+              <div>
+                <small>PAINEL DO PACIENTE</small>
+                <h3>Visão geral</h3>
+              </div>
+              <span class="live"><i></i> atualizado</span>
+            </div>
+
+            <div class="patient">
+              <div class="patient-avatar">DG</div>
+              <div>
+                <small>Olá, Douglas</small>
+                <strong>Seu acompanhamento</strong>
+              </div>
+              <span class="heart-icon">♥</span>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="mini-metric purple">
+                <span>Glicemia</span>
+                <strong>96 <small>mg/dL</small></strong>
+                <b>↗ acompanhamento</b>
+              </div>
+              <div class="mini-metric coral">
+                <span>Pressão</span>
+                <strong>120/80 <small>mmHg</small></strong>
+                <b>● estável</b>
+              </div>
+            </div>
+
+            <div class="risk-panel">
+              <div>
+                <span class="metric-label">MONITORAMENTO</span>
+                <strong>Risco cardiovascular</strong>
+              </div>
+              <div class="risk-score"><span>baixo</span><b>12</b></div>
+            </div>
+
+            <div class="trend-chart">
+              <div class="chart-head">
+                <span>Evolução das medições</span>
+                <small>7 dias</small>
+              </div>
+              <svg viewBox="0 0 430 115" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#8B008B" stop-opacity=".25"/>
+                    <stop offset="1" stop-color="#8B008B" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path class="chart-area" d="M0,88 C38,82 48,91 76,70 S120,80 145,60 S185,67 210,46 S250,58 275,41 S310,50 337,28 S390,39 430,15 V115 H0Z"/>
+                <path class="chart-line" pathLength="1" d="M0,88 C38,82 48,91 76,70 S120,80 145,60 S185,67 210,46 S250,58 275,41 S310,50 337,28 S390,39 430,15"/>
+              </svg>
+              <div class="days"><span>seg</span><span>ter</span><span>qua</span><span>qui</span><span>sex</span><span>sáb</span><span>dom</span></div>
+            </div>
+          </div>
+
+          <div class="floating-card alert-card">
+            <span class="floating-icon">✦</span>
+            <div><strong>Alerta inteligente</strong><small>Equipe de saúde notificada</small></div>
+          </div>
+
+          <div class="floating-card reminder-card">
+            <span class="check">✓</span>
+            <div><strong>Medicamento</strong><small>Lembrete enviado · 08:00</small></div>
+          </div>
+        </div>
       </section>
-      <section class="impact-strip reveal"><div><strong>83%</strong><span>dos problemas cardíacos<br>podem ser prevenidos</span></div><div><strong>24h</strong><span>de acompanhamento<br>na palma da sua mão</span></div><div><strong>1 lugar</strong><span>para seus dados,<br>hábitos e cuidado</span></div></section>
-      <section id="como-funciona" class="secao problem-solution reveal"><div class="cabecalho-secao"><p>Por que CardiAjuda?</p><h2>Cuidar da saúde não deveria ser complicado.</h2><p class="subheading">Entre consultas, rotina corrida e informações espalhadas, é fácil deixar o cuidado para depois. O CardiAjuda coloca clareza e constância no seu dia.</p></div><div class="solution-grid"><article class="problem-card"><span class="card-tag">O problema</span><h3>Você não precisa esperar um susto para começar.</h3><ul><li><span>×</span> Exames e dados perdidos em vários lugares</li><li><span>×</span> Hábitos difíceis de manter no longo prazo</li><li><span>×</span> Dúvidas que ficam sem resposta</li></ul></article><article class="solution-card"><span class="card-tag">Nossa solução</span><h3>Um cuidado que entende sua rotina.</h3><p>O CardiAjuda reúne tudo em um espaço acolhedor e inteligente, para você acompanhar sua evolução e agir antes que seja urgente.</p><a href="#recursos">Conheça os recursos <span>→</span></a></article></div></section>
-      <section id="recursos" class="secao funcionalidades reveal"><div class="cabecalho-secao split-heading"><div><p>Feito para você</p><h2>Pequenas ações.<br><em>Grandes mudanças.</em></h2></div><p class="subheading">Tecnologia que acompanha o seu ritmo, sem julgamentos e sem complicação.</p></div><div class="grelha-funcionalidades"><article class="cartao-funcionalidade feature-purple"><span class="icone-funcionalidade">♡</span><h3>Meu coração</h3><p>Visualize seus indicadores e entenda a evolução da sua saúde com clareza.</p><a href="#">Ver meu painel <span>↗</span></a></article><article class="cartao-funcionalidade feature-light"><span class="icone-funcionalidade">◷</span><h3>Rotina saudável</h3><p>Receba lembretes gentis para medicamentos, consultas, sono e movimento.</p><a href="#">Montar rotina <span>↗</span></a></article><article class="cartao-funcionalidade feature-dark"><span class="icone-funcionalidade">✦</span><h3>Orientação segura</h3><p>Conteúdos confiáveis e apoio para conversar melhor com seu profissional.</p><a href="#">Explorar conteúdos <span>↗</span></a></article></div></section>
-      <section id="monitoramento" class="secao monitoramento reveal"><div class="cabecalho-secao split-heading"><div><p>Seu histórico em um só lugar</p><h2>Entenda seus sinais antes que eles virem alerta.</h2></div><p class="subheading">Registre suas medições, acompanhe tendências e leve informações mais claras para suas consultas.</p></div><div class="health-metrics"><article class="metric-card glucose-card"><div class="metric-heading"><div><span class="metric-icon">◒</span><h3>Glicemia</h3></div><span class="trend up">↗ 8%</span></div><div class="metric-value"><strong>96</strong><span>mg/dL<br><small>jejum</small></span></div><div class="range-bar"><i></i></div><div class="range-labels"><span>Baixa</span><strong>Normal</strong><span>Alta</span></div><p class="metric-note">Dentro da faixa esperada</p><button class="metric-action">Registrar glicemia <span>+</span></button></article><article class="metric-card pressure-card"><div class="metric-heading"><div><span class="metric-icon">⌁</span><h3>Pressão arterial</h3></div><span class="trend stable">● estável</span></div><div class="pressure-value"><strong>120 <small>/</small> 80</strong><span>mmHg</span></div><div class="pressure-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="chart-caption"><span>Últimos 7 dias</span><strong>Boa evolução</strong></div><p class="metric-note">Sua média está saudável</p><button class="metric-action">Registrar pressão <span>+</span></button></article><div class="measurement-card"><span class="card-tag">Dica do dia</span><h3>Constância vale mais que perfeição.</h3><p>Medir no mesmo horário ajuda você e seu profissional a enxergar padrões com mais segurança.</p><a href="#recursos">Ver guia de medições <span>→</span></a></div></div></section>
-      <section id="depoimentos" class="secao depoimentos reveal"><div class="cabecalho-secao"><p>Histórias reais</p><h2>O cuidado muda quando você não está sozinho.</h2></div><div class="grelha-depoimentos"><article class="cartao-depoimento"><p>“Eu achava que cuidar da saúde era uma lista enorme de coisas. Agora ficou possível, uma escolha por vez.”</p><span>— Mariana, usuária CardiAjuda há 8 meses</span></article><article class="cartao-depoimento"><p>“Chego nas consultas entendendo melhor o que aconteceu na minha rotina. Isso mudou a conversa com meu médico.”</p><span>— Roberto, usuário CardiAjuda</span></article></div></section>
+
+      <!-- PROBLEM -->
+      <section class="section container" id="problema">
+        <div class="section-head reveal">
+          <div>
+            <span class="kicker">O problema</span>
+            <h2>Quando a informação fica espalhada, o cuidado perde continuidade.</h2>
+          </div>
+          <p>
+            O projeto parte de um desafio claro: criar um instrumento único para identificar,
+            acompanhar e apoiar pessoas com hipertensão e/ou diabetes.
+          </p>
+        </div>
+
+        <div class="problem-layout">
+          <div class="problem-stats reveal">
+            <div class="big-stat">
+              <span>2006 → 2024</span>
+              <strong>+135%</strong>
+              <p>Aumento da proporção de adultos brasileiros com diabetes, segundo o dado apresentado no pitch.</p>
+            </div>
+            <div class="small-stat">
+              <strong>+31%</strong>
+              <span>Crescimento dos casos de hipertensão no mesmo período.</span>
+            </div>
+          </div>
+
+          <div class="issue-list reveal">
+            <div><span>01</span><p>Desconexão entre os níveis de atenção.</p></div>
+            <div><span>02</span><p>Falta de apoio para mudança de hábitos.</p></div>
+            <div><span>03</span><p>Desconhecimento sobre autocuidado.</p></div>
+            <div><span>04</span><p>Insuficiência de diagnóstico em tempo oportuno.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOLUTION -->
+      <section class="section solution-section" id="solucao">
+        <div class="container">
+          <div class="section-head centered reveal">
+            <span class="kicker">A solução</span>
+            <h2>Uma plataforma para transformar acompanhamento em cuidado contínuo.</h2>
+            <p>
+              O CardiAjuda centraliza dados do paciente e cria uma ponte entre quem precisa
+              de acompanhamento e quem toma decisões no cuidado.
+            </p>
+          </div>
+
+          <div class="connection reveal">
+            <div class="connection-node patient-node">
+              <span>01</span>
+              <strong>Paciente</strong>
+              <small>Registra medições, rotina e hábitos.</small>
+            </div>
+            <div class="connection-line"><i></i><i></i><i></i></div>
+            <div class="connection-core">
+              <img src="src/imagens/logo.png" alt="">
+              <strong>CardiAjuda</strong>
+              <small>Dados + acompanhamento + alertas</small>
+            </div>
+            <div class="connection-line reverse"><i></i><i></i><i></i></div>
+            <div class="connection-node professional-node">
+              <span>02</span>
+              <strong>Profissionais</strong>
+              <small>Acompanham evolução e recebem alertas.</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section class="section container" id="recursos">
+        <div class="section-head split reveal">
+          <div>
+            <span class="kicker">Recursos</span>
+            <h2>Tudo conectado para facilitar decisões melhores.</h2>
+          </div>
+          <p>Do registro diário à comunicação com a equipe de saúde, o projeto concentra o acompanhamento em uma única experiência.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature feature-main reveal">
+            <div class="feature-icon">⌁</div>
+            <span class="feature-number">01</span>
+            <h3>Cadastro único</h3>
+            <p>Informações sobre hipertensão, diabetes e risco cardiovascular reunidas em um só histórico.</p>
+            <div class="feature-ui profile-ui">
+              <span>Perfil de acompanhamento</span>
+              <div><i></i><b></b><em></em></div>
+              <small>Dados centralizados</small>
+            </div>
+          </article>
+
+          <article class="feature feature-light reveal">
+            <div class="feature-icon">✦</div>
+            <span class="feature-number">02</span>
+            <h3>Alertas inteligentes</h3>
+            <p>Identificação de alterações preocupantes para apoiar a equipe de saúde.</p>
+            <div class="alert-ui"><span>!</span><div><b>Alteração identificada</b><small>Verificar acompanhamento</small></div></div>
+          </article>
+
+          <article class="feature feature-dark reveal">
+            <div class="feature-icon">◷</div>
+            <span class="feature-number">03</span>
+            <h3>Lembretes</h3>
+            <p>Envio de lembretes para medicamentos e medições, ajudando na constância do cuidado.</p>
+            <div class="notification-ui"><span>✓</span><div><b>Hora da medição</b><small>Registrar pressão</small></div></div>
+          </article>
+
+          <article class="feature feature-coral reveal">
+            <div class="feature-icon">↗</div>
+            <span class="feature-number">04</span>
+            <h3>Orientação</h3>
+            <p>Conteúdos sobre alimentação, exercícios e autocuidado para apoiar a mudança de hábitos.</p>
+            <div class="habit-ui"><span>Hoje</span><b>+1 hábito acompanhado</b><i>→</i></div>
+          </article>
+
+          <article class="feature feature-wide reveal">
+            <div>
+              <span class="feature-number">05</span>
+              <h3>Dashboard para profissionais</h3>
+              <p>Acompanhe a evolução dos pacientes e consulte relatórios e indicadores para apoiar a tomada de decisão.</p>
+            </div>
+            <div class="dashboard-mini">
+              <div class="mini-bar"><i style="height:48%"></i><i style="height:72%"></i><i style="height:58%"></i><i style="height:88%"></i><i style="height:66%"></i><i style="height:94%"></i></div>
+              <div><span>Pacientes acompanhados</span><strong>128</strong></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- MONITORING -->
+      <section class="section monitoring-section" id="monitoramento">
+        <div class="container">
+          <div class="section-head split reveal">
+            <div>
+              <span class="kicker">Monitoramento</span>
+              <h2>O histórico deixa de ser um conjunto de números e vira contexto.</h2>
+            </div>
+            <p>Registros diários, tendências e alertas podem ajudar a equipe e o paciente a enxergar mudanças ao longo do tempo.</p>
+          </div>
+
+          <div class="monitor-grid">
+            <article class="monitor-card glucose reveal">
+              <div class="monitor-top"><span>Glicemia</span><b>↗ acompanhamento</b></div>
+              <div class="monitor-value"><strong>96</strong><small>mg/dL<br>jejum</small></div>
+              <div class="range"><i></i></div>
+              <div class="range-label"><span>Baixa</span><b>Faixa acompanhada</b><span>Alta</span></div>
+              <button>Registrar medição <span>+</span></button>
+            </article>
+
+            <article class="monitor-card pressure reveal">
+              <div class="monitor-top"><span>Pressão arterial</span><b>● estável</b></div>
+              <div class="monitor-value"><strong>120/80</strong><small>mmHg</small></div>
+              <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="range-label"><span>Últimos 7 dias</span><b>Acompanhamento</b></div>
+              <button>Registrar pressão <span>+</span></button>
+            </article>
+
+            <aside class="monitor-callout reveal">
+              <span class="kicker">Para profissionais</span>
+              <h3>Informação na hora certa.</h3>
+              <p>Relatórios, indicadores e alertas ajudam a visualizar pacientes que precisam de atenção.</p>
+              <a href="#recursos">Ver recursos profissionais →</a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIFFERENTIAL -->
+      <section class="section container differential">
+        <div class="section-head centered reveal">
+          <span class="kicker">Diferencial competitivo</span>
+          <h2>Mais do que registrar. Conectar, identificar e prevenir.</h2>
+        </div>
+
+        <div class="differential-grid">
+          <div class="diff-item reveal"><span>01</span><strong>Plataforma integrada</strong><p>Conecta pacientes e profissionais de saúde.</p></div>
+          <div class="diff-item reveal"><span>02</span><strong>Inteligência Artificial</strong><p>Identifica riscos e apoia alertas sobre alterações.</p></div>
+          <div class="diff-item reveal"><span>03</span><strong>Prevenção</strong><p>Foco em acompanhamento contínuo, não apenas no tratamento.</p></div>
+        </div>
+      </section>
+
+      <!-- GROWTH -->
+      <section class="section growth-section">
+        <div class="container growth">
+          <div class="growth-copy reveal">
+            <span class="kicker">Estratégia de crescimento</span>
+            <h2>Começar pequeno. Validar. Expandir.</h2>
+            <p>O pitch propõe uma evolução por etapas, começando com projetos-piloto e avançando para redes de saúde.</p>
+          </div>
+          <div class="timeline reveal">
+            <div><span>01</span><b>Projetos-piloto</b><small>UBS e clínicas parceiras</small></div>
+            <div><span>02</span><b>Expansão</b><small>Hospitais e redes privadas</small></div>
+            <div><span>03</span><b>Convênios</b><small>Secretarias municipais e estaduais</small></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta container reveal">
+        <div class="cta-orbit"></div>
+        <div class="cta-content">
+          <span class="kicker">CardiAjuda</span>
+          <h2>Seu cuidado merece continuidade.</h2>
+          <p>Uma plataforma para aproximar informação, acompanhamento e pessoas.</p>
+          <button class="btn btn-white btn-large magnetic auth-trigger" data-auth="signup">Conhecer o CardiAjuda <span>→</span></button>
+        </div>
+      </section>
     </main>
-    <footer class="rodape"><p>© 2026 CardiAjuda. Cuidado que acompanha você.</p><a href="#">Instagram</a><a href="#">Privacidade</a></footer>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <a class="brand" href="#"><img src="src/imagens/logo.png" alt=""><span>Cardi<strong>Ajuda</strong></span></a>
+        <p>Diabetes e hipertensão sob controle.</p>
+        <div><a href="#problema">Projeto</a><a href="#recursos">Recursos</a><a href="#monitoramento">Monitoramento</a></div>
+        <small>© 2026 CardiAjuda</small>
+      </div>
+    </footer>
   </div>
-  <section class="auth-view" id="auth-view" aria-hidden="true"><div class="auth-visual"><a class="marca auth-brand" href="#"><img class="logo" src="src/imagens/logo.png" alt="CardiAjuda logo"><span>Cardi</span>Ajuda</a><div class="auth-message"><span class="etiqueta"><i></i> Seu cuidado, do seu jeito</span><h2>Um passo pequeno pode mudar muita coisa.</h2><p>Tenha clareza para cuidar do seu coração todos os dias.</p></div><div class="auth-quote">“Cuidar de mim ficou mais simples quando eu pude enxergar meu progresso.”<small>Camila, usuária CardiAjuda</small></div></div><div class="auth-form-wrap"><button class="close-auth" id="close-auth" aria-label="Voltar para a página inicial">×</button><div class="auth-form"><div class="form-heading"><p class="eyebrow" id="auth-eyebrow">BEM-VINDO DE VOLTA</p><h1 id="auth-title">Entre na sua conta</h1><p id="auth-description">Continue acompanhando o que importa.</p></div><form id="auth-form"><label id="name-field" class="hidden">Nome completo<input type="text" placeholder="Como podemos te chamar?"></label><label>E-mail<input type="email" placeholder="seu@email.com" required></label><label>Senha<div class="password-field"><input type="password" placeholder="••••••••" required><button type="button" class="toggle-password">Mostrar</button></div></label><a class="forgot" href="#">Esqueceu sua senha?</a><button class="btn-primary submit-auth" type="submit"><span id="submit-label">Entrar na CardiAjuda</span> <span>→</span></button><p class="form-feedback" id="form-feedback"></p></form><div class="auth-switch"><span id="switch-question">Ainda não tem uma conta?</span> <button id="switch-auth" type="button">Criar agora</button></div><p class="legal">Ao continuar, você concorda com nossos termos de uso e política de privacidade.</p></div></div></section>
+
+  <!-- AUTH -->
+  <section class="auth-view" id="auth-view" aria-hidden="true">
+    <div class="auth-panel">
+      <a class="brand auth-brand" href="#"><img src="src/imagens/logo.png" alt=""><span>Cardi<strong>Ajuda</strong></span></a>
+      <div class="auth-copy">
+        <span class="kicker">Seu cuidado, do seu jeito</span>
+        <h2>Um passo pequeno pode mudar muita coisa.</h2>
+        <p>Tenha seus registros, lembretes e acompanhamento em um só lugar.</p>
+      </div>
+      <div class="auth-chip">✦ Plataforma integrada de monitoramento</div>
+    </div>
+
+    <div class="auth-form-wrap">
+      <button class="close-auth" id="close-auth" aria-label="Voltar">×</button>
+      <div class="auth-form">
+        <div class="form-heading">
+          <span class="kicker" id="auth-eyebrow">BEM-VINDO DE VOLTA</span>
+          <h1 id="auth-title">Entre na sua conta</h1>
+          <p id="auth-description">Continue acompanhando o que importa.</p>
+        </div>
+
+        <form id="auth-form">
+          <label id="name-field" class="hidden">Nome completo<input type="text" placeholder="Como podemos te chamar?"></label>
+          <label>E-mail<input type="email" placeholder="seu@email.com" required></label>
+          <label>Senha
+            <div class="password-field">
+              <input type="password" placeholder="••••••••" required>
+              <button type="button" class="toggle-password">Mostrar</button>
+            </div>
+          </label>
+          <a class="forgot" href="#">Esqueceu sua senha?</a>
+          <button class="btn btn-primary submit-auth" type="submit"><span id="submit-label">Entrar na CardiAjuda</span> →</button>
+          <p class="form-feedback" id="form-feedback"></p>
+        </form>
+
+        <div class="auth-switch">
+          <span id="switch-question">Ainda não tem uma conta?</span>
+          <button id="switch-auth" type="button">Criar agora</button>
+        </div>
+        <p class="legal">Ao continuar, você concorda com nossos termos de uso e política de privacidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script>
-    const landing = document.getElementById('landing-view'); const authView = document.getElementById('auth-view'); const nameField = document.getElementById('name-field'); const authTitle = document.getElementById('auth-title'); const authEyebrow = document.getElementById('auth-eyebrow'); const authDescription = document.getElementById('auth-description'); const submitLabel = document.getElementById('submit-label'); const switchQuestion = document.getElementById('switch-question'); const switchAuth = document.getElementById('switch-auth'); let isSignup = false;
-    function setAuthMode(signup) { isSignup = signup; nameField.classList.toggle('hidden', !signup); authTitle.textContent = signup ? 'Crie sua conta' : 'Entre na sua conta'; authEyebrow.textContent = signup ? 'COMECE SEU CUIDADO' : 'BEM-VINDO DE VOLTA'; authDescription.textContent = signup ? 'Seu coração agradece o primeiro passo.' : 'Continue acompanhando o que importa.'; submitLabel.textContent = signup ? 'Criar minha conta' : 'Entrar na CardiAjuda'; switchQuestion.textContent = signup ? 'Já tem uma conta?' : 'Ainda não tem uma conta?'; switchAuth.textContent = signup ? 'Entrar' : 'Criar agora'; }
-    function openAuth(mode) { setAuthMode(mode === 'signup'); landing.classList.add('is-hidden'); authView.classList.add('is-visible'); authView.setAttribute('aria-hidden', 'false'); document.body.classList.add('auth-open'); }
-    document.querySelectorAll('.auth-trigger').forEach(button => button.addEventListener('click', () => openAuth(button.dataset.auth))); document.getElementById('close-auth').addEventListener('click', () => { authView.classList.remove('is-visible'); landing.classList.remove('is-hidden'); authView.setAttribute('aria-hidden', 'true'); document.body.classList.remove('auth-open'); }); switchAuth.addEventListener('click', () => setAuthMode(!isSignup));
-    document.querySelector('.toggle-password').addEventListener('click', event => { const input = event.target.closest('.password-field').querySelector('input'); input.type = input.type === 'password' ? 'text' : 'password'; event.target.textContent = input.type === 'password' ? 'Mostrar' : 'Ocultar'; }); document.getElementById('auth-form').addEventListener('submit', event => { event.preventDefault(); document.getElementById('form-feedback').textContent = isSignup ? 'Conta criada com sucesso. Bem-vindo ao seu cuidado.' : 'Login demonstrativo realizado com sucesso.'; });
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }), { threshold: .12 }); document.querySelectorAll('.reveal').forEach(section => observer.observe(section));
+    gsap.registerPlugin(ScrollTrigger);
+
+    const landing = document.getElementById('landing-view');
+    const authView = document.getElementById('auth-view');
+    const nameField = document.getElementById('name-field');
+    const authTitle = document.getElementById('auth-title');
+    const authEyebrow = document.getElementById('auth-eyebrow');
+    const authDescription = document.getElementById('auth-description');
+    const submitLabel = document.getElementById('submit-label');
+    const switchQuestion = document.getElementById('switch-question');
+    const switchAuth = document.getElementById('switch-auth');
+    let isSignup = false;
+
+    // Entrada inicial
+    gsap.from('.hero-copy > *', { opacity: 0, y: 24, duration: .8, stagger: .09, ease: 'power3.out', delay: .15 });
+    gsap.from('.main-dashboard', { opacity: 0, y: 40, rotate: 1.5, duration: 1.05, ease: 'power3.out', delay: .35 });
+    gsap.from('.floating-card', { opacity: 0, scale: .8, duration: .7, stagger: .15, ease: 'back.out(1.7)', delay: .8 });
+
+    // Animações de scroll
+    document.querySelectorAll('.reveal').forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 34 },
+        {
+          opacity: 1, y: 0, duration: .8, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 84%', once: true }
+        }
+      );
+    });
+
+    // Linha do gráfico
+    gsap.fromTo('.chart-line',
+      { strokeDasharray: 1, strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 1.7, ease: 'power2.out', delay: .7 }
+    );
+
+    // Movimento sutil do dashboard
+    gsap.to('.main-dashboard', {
+      y: -8, duration: 3.2, repeat: -1, yoyo: true, ease: 'sine.inOut'
+    });
+
+    gsap.to('.ambient-a', { x: 35, y: 25, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    gsap.to('.ambient-b', { x: -25, y: -20, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+    // Botões com microinteração
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * .12;
+        const y = (e.clientY - r.top - r.height / 2) * .12;
+        gsap.to(btn, { x, y, duration: .25, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: .35, ease: 'elastic.out(1, .5)' }));
+    });
+
+    function setAuthMode(signup) {
+      isSignup = signup;
+      nameField.classList.toggle('hidden', !signup);
+      authTitle.textContent = signup ? 'Crie sua conta' : 'Entre na sua conta';
+      authEyebrow.textContent = signup ? 'COMECE SEU CUIDADO' : 'BEM-VINDO DE VOLTA';
+      authDescription.textContent = signup ? 'Seu primeiro passo para um acompanhamento mais conectado.' : 'Continue acompanhando o que importa.';
+      submitLabel.textContent = signup ? 'Criar minha conta' : 'Entrar na CardiAjuda';
+      switchQuestion.textContent = signup ? 'Já tem uma conta?' : 'Ainda não tem uma conta?';
+      switchAuth.textContent = signup ? 'Entrar' : 'Criar agora';
+    }
+
+    function openAuth(mode) {
+      setAuthMode(mode === 'signup');
+      landing.classList.add('is-hidden');
+      authView.classList.add('is-visible');
+      authView.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('auth-open');
+      gsap.from('.auth-panel > *, .auth-form > *', { opacity: 0, y: 18, duration: .6, stagger: .06, ease: 'power3.out' });
+    }
+
+    document.querySelectorAll('.auth-trigger').forEach(button => {
+      button.addEventListener('click', () => openAuth(button.dataset.auth));
+    });
+
+    document.getElementById('close-auth').addEventListener('click', () => {
+      authView.classList.remove('is-visible');
+      landing.classList.remove('is-hidden');
+      authView.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('auth-open');
+    });
+
+    switchAuth.addEventListener('click', () => setAuthMode(!isSignup));
+
+    document.querySelector('.toggle-password').addEventListener('click', event => {
+      const input = event.target.closest('.password-field').querySelector('input');
+      input.type = input.type === 'password' ? 'text' : 'password';
+      event.target.textContent = input.type === 'password' ? 'Mostrar' : 'Ocultar';
+    });
+
+    document.getElementById('auth-form').addEventListener('submit', event => {
+      event.preventDefault();
+      document.getElementById('form-feedback').textContent = isSignup
+        ? 'Conta criada com sucesso. Bem-vindo ao CardiAjuda.'
+        : 'Login demonstrativo realizado com sucesso.';
+    });
+
+    // Respeita usuários que preferem menos movimento
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.globalTimeline.pause();
+      ScrollTrigger.getAll().forEach(t => t.kill());
+      document.querySelectorAll('.reveal').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    }
   </script>
 </body>
 </html>
