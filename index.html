@@ -18,9 +18,8 @@
 
     <header class="header">
       <nav class="nav container">
-        <a class="brand" href="#" aria-label="CardiAjuda">
-          <img src="src/imagens/logo.png" alt="Logo CardiAjuda">
-          <span>Cardi<strong>Ajuda</strong></span>
+        <a class="brand brand-mark" href="#" aria-label="CardiAjuda">
+          <img src="src/imagens/image.png" alt="Logo CardiAjuda">
         </a>
 
         <div class="nav-links">
@@ -279,20 +278,52 @@
           </div>
 
           <div class="monitor-grid">
-            <article class="monitor-card glucose reveal">
+            <article class="monitor-card glucose reveal" data-card="glucose">
               <div class="monitor-top"><span>Glicemia</span><b>↗ acompanhamento</b></div>
-              <div class="monitor-value"><strong>96</strong><small>mg/dL<br>jejum</small></div>
-              <div class="range"><i></i></div>
-              <div class="range-label"><span>Baixa</span><b>Faixa acompanhada</b><span>Alta</span></div>
-              <button>Registrar medição <span>+</span></button>
+              <div class="monitor-value"><strong id="glucose-value">96</strong><small>mg/dL<br>jejum</small></div>
+              <div class="range"><i id="glucose-marker"></i></div>
+              <div class="range-label"><span>Baixa</span><b id="glucose-zone">Faixa acompanhada</b><span>Alta</span></div>
+
+              <form class="monitor-form" data-monitor-form="glucose" novalidate>
+                <label>
+                  Nova glicemia
+                  <input type="number" name="value" min="40" max="250" step="1" value="96" aria-label="Glicemia">
+                </label>
+                <div class="monitor-form-actions">
+                  <button type="button" class="monitor-cancel" data-monitor-cancel="glucose">Cancelar</button>
+                  <button type="submit" class="monitor-save">Salvar</button>
+                </div>
+              </form>
+
+              <button type="button" class="monitor-action" data-monitor-action="glucose">Registrar medição <span>+</span></button>
             </article>
 
-            <article class="monitor-card pressure reveal">
-              <div class="monitor-top"><span>Pressão arterial</span><b>● estável</b></div>
-              <div class="monitor-value"><strong>120/80</strong><small>mmHg</small></div>
-              <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <article class="monitor-card pressure reveal" data-card="pressure">
+              <div class="monitor-top"><span>Pressão arterial</span><b id="pressure-status">● estável</b></div>
+              <div class="monitor-value"><strong id="pressure-value">120/80</strong><small>mmHg</small></div>
+              <div class="bars" aria-label="Histórico de pressão arterial">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
               <div class="range-label"><span>Últimos 7 dias</span><b>Acompanhamento</b></div>
-              <button>Registrar pressão <span>+</span></button>
+
+              <form class="monitor-form" data-monitor-form="pressure" novalidate>
+                <div class="monitor-form-row">
+                  <label>
+                    Sistólica
+                    <input type="number" name="systolic" min="60" max="220" step="1" value="120" aria-label="Pressão sistólica">
+                  </label>
+                  <label>
+                    Diastólica
+                    <input type="number" name="diastolic" min="40" max="140" step="1" value="80" aria-label="Pressão diastólica">
+                  </label>
+                </div>
+                <div class="monitor-form-actions">
+                  <button type="button" class="monitor-cancel" data-monitor-cancel="pressure">Cancelar</button>
+                  <button type="submit" class="monitor-save">Salvar</button>
+                </div>
+              </form>
+
+              <button type="button" class="monitor-action" data-monitor-action="pressure">Registrar pressão <span>+</span></button>
             </article>
 
             <aside class="monitor-callout reveal">
@@ -349,7 +380,7 @@
 
     <footer class="footer">
       <div class="container footer-inner">
-        <a class="brand" href="#"><img src="src/imagens/logo.png" alt=""><span>Cardi<strong>Ajuda</strong></span></a>
+        <a class="brand brand-mark" href="#"><img src="src/imagens/image.png" alt="Logo CardiAjuda"></a>
         <p>Diabetes e hipertensão sob controle.</p>
         <div><a href="#problema">Projeto</a><a href="#recursos">Recursos</a><a href="#monitoramento">Monitoramento</a></div>
         <small>© 2026 CardiAjuda</small>
@@ -360,7 +391,7 @@
   <!-- AUTH -->
   <section class="auth-view" id="auth-view" aria-hidden="true">
     <div class="auth-panel">
-      <a class="brand auth-brand" href="#"><img src="src/imagens/logo.png" alt=""><span>Cardi<strong>Ajuda</strong></span></a>
+      <a class="brand auth-brand brand-mark" href="#"><img src="src/imagens/image.png" alt="Logo CardiAjuda"></a>
       <div class="auth-copy">
         <span class="kicker">Seu cuidado, do seu jeito</span>
         <h2>Um passo pequeno pode mudar muita coisa.</h2>
@@ -416,8 +447,7 @@
       </div>
 
       <div class="onboarding-brand">
-        <img src="src/imagens/logo.png" alt="Logo CardiAjuda">
-        <span>Cardi<strong>Ajuda</strong></span>
+        <img src="src/imagens/image.png" alt="Logo CardiAjuda">
       </div>
 
       <div class="checkin-content">
@@ -491,7 +521,7 @@
   <!-- PERSONALIZED DASHBOARD -->
   <section class="personal-view" id="personal-view" aria-hidden="true">
     <div class="personal-topbar">
-      <a class="brand" href="#"><img src="src/imagens/logo.png" alt=""><span>Cardi<strong>Ajuda</strong></span></a>
+      <a class="brand brand-mark" href="#"><img src="src/imagens/image.png" alt="Logo CardiAjuda"></a>
       <button type="button" id="logout-demo" class="btn btn-ghost">Sair</button>
     </div>
     <div class="personal-container">

@@ -802,6 +802,191 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================================================
+     MONITORAMENTO REAL
+     ========================================================= */
+
+  const monitorStorageKey = "cardiajudaMonitorData";
+
+  function getMonitorData() {
+    try {
+      const existing = JSON.parse(localStorage.getItem(monitorStorageKey));
+
+      return {
+        glucose: Number(existing?.glucose ?? 96),
+        pressure: {
+          systolic: Number(existing?.pressure?.systolic ?? 120),
+          diastolic: Number(existing?.pressure?.diastolic ?? 80)
+        },
+        pressureHistory: Array.isArray(existing?.pressureHistory) && existing.pressureHistory.length
+          ? existing.pressureHistory.slice(-7)
+          : [118, 122, 120, 121, 118, 124, 120]
+      };
+    } catch (error) {
+      return {
+        glucose: 96,
+        pressure: { systolic: 120, diastolic: 80 },
+        pressureHistory: [118, 122, 120, 121, 118, 124, 120]
+      };
+    }
+  }
+
+  function saveMonitorData(data) {
+    localStorage.setItem(monitorStorageKey, JSON.stringify(data));
+  }
+
+  function updateGlucoseDisplay() {
+    const data = getMonitorData();
+    const glucoseValue = document.querySelector("#glucose-value");
+    const glucoseZone = document.querySelector("#glucose-zone");
+    const glucoseMarker = document.querySelector("#glucose-marker");
+
+    if (!glucoseValue || !glucoseMarker) return;
+
+    const value = Number(data.glucose);
+    glucoseValue.textContent = String(value);
+
+    const ratio = Math.min(100, Math.max(0, ((value - 40) / 210) * 100));
+    glucoseMarker.style.left = `${ratio}%`;
+
+    if (value < 80) {
+      glucoseZone.textContent = "Baixa";
+      glucoseZone.style.color = "#d79b8d";
+    } else if (value > 140) {
+      glucoseZone.textContent = "Alta";
+      glucoseZone.style.color = "#d79b8d";
+    } else {
+      glucoseZone.textContent = "Faixa acompanhada";
+      glucoseZone.style.color = "#3d9670";
+    }
+
+    const input = document.querySelector('[data-monitor-form="glucose"] input');
+    if (input) input.value = value;
+  }
+
+  function updatePressureDisplay() {
+    const data = getMonitorData();
+    const valueNode = document.querySelector("#pressure-value");
+    const statusNode = document.querySelector("#pressure-status");
+    const bars = document.querySelectorAll(".bars i");
+
+    if (!valueNode || !statusNode || !bars.length) return;
+
+    const systolic = Number(data.pressure.systolic);
+    const diastolic = Number(data.pressure.diastolic);
+    const pressureText = `${systolic}/${diastolic}`;
+    valueNode.textContent = pressureText;
+
+    const avg = (systolic + diastolic) / 2;
+    statusNode.textContent = avg > 110 ? "● estável" : "↗ acompanhamento";
+    statusNode.style.color = avg > 110 ? "#d56e5c" : "#CF2390";
+
+    const inputSystolic = document.querySelector('[data-monitor-form="pressure"] input[name="systolic"]');
+    const inputDiastolic = document.querySelector('[data-monitor-form="pressure"] input[name="diastolic"]');
+
+    if (inputSystolic) inputSystolic.value = systolic;
+    if (inputDiastolic) inputDiastolic.value = diastolic;
+
+    const values = data.pressureHistory.slice(-7);
+
+    values.forEach((value, index) => {
+      const bar = bars[index];
+      if (!bar) return;
+      const relativeHeight = Math.max(18, (value / 150) * 100);
+      bar.style.height = `${relativeHeight}%`;
+      bar.style.background = value > 130 ? "#e79a8b" : "#d7a7c8";
+    });
+  }
+
+  function syncMonitorCard(type, value) {
+    const data = getMonitorData();
+
+    if (type === "glucose") {
+      const nextValue = Number(value);
+      data.glucose = Number.isFinite(nextValue) ? Math.min(250, Math.max(40, nextValue)) : data.glucose;
+      saveMonitorData(data);
+      updateGlucoseDisplay();
+      return;
+    }
+
+    if (type === "pressure") {
+      const nextSystolic = Number(value.systolic);
+      const nextDiastolic = Number(value.diastolic);
+
+      data.pressure = {
+        systolic: Number.isFinite(nextSystolic) ? Math.min(220, Math.max(60, nextSystolic)) : data.pressure.systolic,
+        diastolic: Number.isFinite(nextDiastolic) ? Math.min(140, Math.max(40, nextDiastolic)) : data.pressure.diastolic
+      };
+
+      const nextMeasurement = Math.max(data.pressure.systolic, data.pressure.diastolic);
+      data.pressureHistory = [...data.pressureHistory.slice(-6), nextMeasurement];
+      saveMonitorData(data);
+      updatePressureDisplay();
+    }
+  }
+
+  document.addEventListener("click", (event) => {
+    const action = event.target.closest("[data-monitor-action]");
+    if (!action) return;
+
+    const type = action.dataset.monitorAction;
+    const card = action.closest(".monitor-card");
+    if (!card) return;
+
+    card.classList.add("is-editing");
+    const input = card.querySelector("input");
+    input?.focus();
+  });
+
+  document.addEventListener("click", (event) => {
+    const cancel = event.target.closest("[data-monitor-cancel]");
+    if (!cancel) return;
+
+    const type = cancel.dataset.monitorCancel;
+    const card = cancel.closest(".monitor-card");
+    if (!card) return;
+
+    card.classList.remove("is-editing");
+  });
+
+  document.addEventListener("submit", (event) => {
+    const form = event.target.closest("[data-monitor-form]");
+    if (!form) return;
+
+    event.preventDefault();
+
+    const type = form.dataset.monitorForm;
+    const card = form.closest(".monitor-card");
+
+    if (type === "glucose") {
+      const value = form.querySelector('input[name="value"]')?.value;
+      if (value === "" || Number.isNaN(Number(value))) {
+        return;
+      }
+
+      syncMonitorCard("glucose", value);
+    }
+
+    if (type === "pressure") {
+      const systolic = form.querySelector('input[name="systolic"]')?.value;
+      const diastolic = form.querySelector('input[name="diastolic"]')?.value;
+
+      if (!systolic || !diastolic) return;
+
+      syncMonitorCard("pressure", {
+        systolic,
+        diastolic
+      });
+    }
+
+    card?.classList.remove("is-editing");
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    updateGlucoseDisplay();
+    updatePressureDisplay();
+  });
+
+  /* =========================================================
      LOGOUT
      ========================================================= */
 
