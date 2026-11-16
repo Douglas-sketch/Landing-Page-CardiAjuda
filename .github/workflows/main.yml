@@ -1,0 +1,85 @@
+
+name: Deploy CardiAjuda - GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validar projeto
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Verificar arquivos essenciais
+        run: |
+          echo "Verificando estrutura do CardiAjuda..."
+
+          test -f index.html
+          test -f app.js
+          test -f src/styles/styles.css
+          test -d src/imagens
+          test -d src/scripts/vendor
+
+          echo "Estrutura validada com sucesso!"
+
+      - name: Preparar arquivos para publicação
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p _site
+
+          cp index.html _site/
+          cp app.js _site/
+          cp -R src _site/
+
+          touch _site/.nojekyll
+
+          echo "Arquivos preparados com sucesso!"
+
+      - name: Enviar artefato do site
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Publicar CardiAjuda
+    if: github.event_name != 'pull_request'
+    needs: validate
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Confirmar publicação
+        run: |
+          echo "CardiAjuda publicado com sucesso!"
+          echo "URL: ${{ steps.deployment.outputs.page_url }}"
